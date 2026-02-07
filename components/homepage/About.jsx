@@ -34,9 +34,9 @@ export default function About() {
             ))}
           </div>
 
-          <button className="bg-black max-lg:w-full text-white hover:bg-white hover:text-black border transition px-8 text-white py-3 rounded-full text-base font-medium">
+          <a href="/about" className="bg-black max-lg:w-full text-white hover:bg-white hover:text-black border transition px-8 text-white py-3 rounded-full text-base font-medium">
             About Us
-          </button>
+          </a>
         </div>
 
         {/* RIGHT IMAGES GRID */}

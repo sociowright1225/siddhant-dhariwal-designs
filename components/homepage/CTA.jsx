@@ -39,13 +39,13 @@ export default function CTA() {
 
           {/* BUTTONS - Mobile par stack, Small screen se row mein */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="w-full sm:w-auto px-10 py-4 rounded-full bg-white text-black text-sm font-semibold hover:bg-black hover:text-white border border-white transition-all duration-300">
+            <a href="/contact" className="w-full sm:w-auto px-10 py-4 rounded-full bg-white text-black text-sm font-semibold hover:bg-black hover:text-white border border-white transition-all duration-300">
               Shop Now
-            </button>
+            </a>
 
-            <button className="w-full sm:w-auto px-10 py-4 rounded-full border border-white/50 text-white text-sm font-semibold backdrop-blur-sm hover:bg-white hover:text-black transition-all duration-300">
+            <a href="/about" className="w-full sm:w-auto px-10 py-4 rounded-full border border-white/50 text-white text-sm font-semibold backdrop-blur-sm hover:bg-white hover:text-black transition-all duration-300">
               Learn More
-            </button>
+            </a>
           </div>
         </div>
       </div>

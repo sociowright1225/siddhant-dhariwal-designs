@@ -71,9 +71,9 @@ export default function ProjectsScrollSection() {
 
       {/* VIEW ALL BUTTON */}
       <div className="flex justify-center mt-16 px-6">
-        <button className="w-full sm:w-auto bg-black text-white hover:bg-white hover:text-black border border-black transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium">
+        <a href="/projects" className="w-full sm:w-auto bg-black text-white hover:bg-white hover:text-black border border-black transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium">
           View All Projects
-        </button>
+        </a>
       </div>
     </section>
   );

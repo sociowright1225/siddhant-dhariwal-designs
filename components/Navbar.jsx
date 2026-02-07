@@ -42,9 +42,9 @@ export default function Navbar() {
 
           {/* Right Side: CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block px-5 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-white hover:text-black border border-black transition">
+            <a href="/contact" className="hidden sm:block px-5 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-white hover:text-black border border-black transition">
               Contact Us
-            </button>
+            </a>
             
             {/* Mobile Menu Button */}
             <button 
@@ -69,9 +69,9 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <button className="sm:hidden px-6 py-2 rounded-full bg-black text-white text-sm font-medium">
+            <a href="/contact" className="sm:hidden px-6 py-2 rounded-full bg-black text-white text-sm font-medium">
               Contact Us
-            </button>
+            </a>
           </ul>
         </div>
       </div>
