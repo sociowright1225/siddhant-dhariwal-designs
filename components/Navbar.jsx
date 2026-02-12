@@ -26,7 +26,7 @@ export default function Navbar() {
 
           <Link href="/" className="flex items-center ">
             {/* Mobile / Tablet – NAME (wide) */}
-            <div className="relative h-12 w-40 max-lg:block hidden">
+            <div className="relative h-12 w-40 ">
               <Image
                 src={name}
                 alt="Brand Name"
@@ -37,7 +37,7 @@ export default function Navbar() {
             </div>
 
             {/* Desktop – LOGO (compact) */}
-            <div className="relative h-12 w-14 hidden max-lg:hidden lg:block">
+            {/* <div className="relative h-12 w-14 hidden max-lg:hidden lg:block">
               <Image
                 src={logo}
                 alt="Brand Logo"
@@ -45,7 +45,7 @@ export default function Navbar() {
                 className="object-contain"
                 priority
               />
-            </div>
+            </div> */}
           </Link>
 
           {/* Desktop Menu */}
