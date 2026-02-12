@@ -18,21 +18,18 @@ export default function About() {
             dummy text of the printing
           </h2>
 
-          <p className="text-gray-400 text-sm mb-8 max-w-md">
+          <p className="text-gray-400 text-sm mb-4 max-w-md">
+            Lorem Ipsum has been the industry’s standard dummy text ever since
+            the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book.
+          </p>
+ <p className="text-gray-400 text-sm mb-8 max-w-md">
             Lorem Ipsum has been the industry’s standard dummy text ever since
             the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book.
           </p>
 
-          {/* STATS */}
-          <div className="grid grid-cols-2 gap-6 mb-8 max-w-sm">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item}>
-                <h3 className="text-2xl font-semibold">255+</h3>
-                <p className="text-xs text-gray-400">Lorem Ipsum</p>
-              </div>
-            ))}
-          </div>
+         
 
           <a href="/about" className="bg-black max-lg:w-full text-white hover:bg-white hover:text-black border transition px-8 text-white py-3 rounded-full text-base font-medium">
             About Us

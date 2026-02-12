@@ -1,133 +1,83 @@
 "use client";
 
-import React, { useState } from "react";
+import api from "@/lib/api";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const products = [
- 
+export default function CategoryList() {
+  const [categoryData, setCategoryData] = useState([]);
 
-  {
-    title: "Hanging Lamps",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
-  },
-   {
-    title: "Hanging Lamps",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
-  },
-   {
-    title: "Hanging Lamps",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
-  },
-   {
-    title: "Hanging Lamps",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
-  },
-   {
-    title: "Hanging Lamps",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
-  },
-   {
-    title: "Hanging Lamps",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
-  },
-  
-  {
-    title: "Modern Armchair",
-    img: "https://images.unsplash.com/photo-1598300046647-5c775ad477c4",
-  }, {
-    title: "Modern Armchair",
-    img: "https://images.unsplash.com/photo-1598300046647-5c775ad477c4",
-  }, {
-    title: "Modern Armchair",
-    img: "https://images.unsplash.com/photo-1598300046647-5c775ad477c4",
-  }, {
-    title: "Modern Armchair",
-    img: "https://images.unsplash.com/photo-1598300046647-5c775ad477c4",
-  }, {
-    title: "Modern Armchair",
-    img: "https://images.unsplash.com/photo-1598300046647-5c775ad477c4",
-  }, {
-    title: "Modern Armchair",
-    img: "https://images.unsplash.com/photo-1598300046647-5c775ad477c4",
-  },
-  {
-    title: "Accent Lighting",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed657adbbd",
-  },  {
-    title: "Accent Lighting",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed657adbbd",
-  },  {
-    title: "Accent Lighting",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed657adbbd",
-  },  {
-    title: "Accent Lighting",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed657adbbd",
-  },  {
-    title: "Accent Lighting",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed657adbbd",
-  },  {
-    title: "Accent Lighting",
-    img: "https://images.unsplash.com/photo-1507473885765-e6ed657adbbd",
-  },
-];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await api.get("/products");
+        const categoriesMap = {};
 
-export default function Products() {
-  const [selectedProduct, setSelectedProduct] = useState("All");
-
-  // unique product names for dropdown
-  const productNames = ["All", ...new Set(products.map(p => p.title))];
-
-  // filter logic
-  const filteredProducts =
-    selectedProduct === "All"
-      ? products
-      : products.filter(p => p.title === selectedProduct);
+        data.forEach((product) => {
+          if (!categoriesMap[product.category]) {
+            categoriesMap[product.category] = {
+              name: product.category,
+              imageUrl: product.image?.url || null,
+            };
+          }
+        });
+        setCategoryData(Object.values(categoriesMap));
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-semibold">Products</h2>
-
-        <select
-          value={selectedProduct}
-          onChange={(e) => setSelectedProduct(e.target.value)}
-          className="border rounded-md px-3 py-2 text-sm focus:outline-none"
-        >
-          {productNames.map((name, index) => (
-            <option key={index} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {filteredProducts.map((item, index) => (
-          <div key={index} className="group">
-            <div className="relative w-full h-[320px] bg-[#e6e1d8] rounded-md overflow-hidden">
-              <Image
-                src={item.img}
-                alt={item.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-
-            <h3 className="mt-4 text-sm font-medium">
-              {item.title}
-            </h3>
+    <section className=" min-h-screen py-16 px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
+        <div className="mb-12">
+          <p className=" text-sm font-medium mb-2">Products</p>
+          <div className="flex flex-col md:flex-row justify-between items-start gap-6">
+            <h2 className="text-3xl md:text-4xl font-serif  max-w-md leading-tight">
+              Lorem Ipsum is dummy text of the printing
+            </h2>
+            <p className="text-gray-400 text-sm max-w-lg">
+              Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+            </p>
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Empty state */}
-      {filteredProducts.length === 0 && (
-        <p className="text-center text-sm text-gray-500 mt-10">
-          No products found
-        </p>
-      )}
+        {/* Categories Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categoryData.map((cat, index) => (
+            <Link
+              key={index}
+              href={`/products/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, '-'))}`}
+              className="group flex flex-col items-center"
+            >
+              {/* Card Container */}
+              <div className="relative w-full aspect-square  rounded-[2rem] overflow-hidden flex items-center justify-center transition-all duration-300 shadow-lg">
+                {cat.imageUrl && (
+                  <div className="relative w-full h-full transform transition-transform duration-500 group-hover:scale-110">
+                    <Image
+                      src={cat.imageUrl}
+                      alt={cat.name}
+                      fill
+                      className=" object-cover" // Contain rakha hai taaki furniture kote nahi
+                    />
+                  </div>
+                )}
+                
+               
+              </div>
+
+              {/* Category Name */}
+              <h3 className="mt-6  text-lg font-medium tracking-wide capitalize">
+                {cat.name}
+              </h3>
+            </Link>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
