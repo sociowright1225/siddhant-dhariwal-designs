@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/Navbar/logo.png";
+import logo from "@/public/Navbar/name.png";
 import { Menu, X } from "lucide-react"; // Install lucide-react or use SVG icons
 
 export default function Navbar() {
