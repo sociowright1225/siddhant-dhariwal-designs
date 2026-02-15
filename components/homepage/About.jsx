@@ -45,13 +45,13 @@ export default function About() {
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[40%] h-34 rounded-lg rounded-tl-3xl max-lg:rounded-tl-2xl "
+                className="w-[40%] h-34 rounded-lg rounded-tl-2xl "
               /><Image
                 src="https://images.unsplash.com/photo-1618220179428-22790b461013"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[60%] h-34 rounded-lg rounded-tr-3xl max-lg:rounded-tr-2xl "
+                className="w-[60%] h-34 rounded-lg rounded-tr-2xl "
               />
             </div> <div className="flex w-full gap-4">
               <Image
@@ -73,13 +73,13 @@ export default function About() {
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[40%] h-34 rounded-lg rounded-bl-3xl max-lg:rounded-bl-2xl "
+                className="w-[40%] h-34 rounded-lg rounded-bl-2xl "
               /><Image
                 src="https://images.unsplash.com/photo-1618220179428-22790b461013"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[60%] h-34 rounded-lg rounded-br-3xl max-lg:rounded-br-2xl "
+                className="w-[60%] h-34 rounded-lg rounded-br-2xl "
               />
             </div>
         </div>
