@@ -45,13 +45,13 @@ export default function About() {
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[30%] h-34 rounded-lg"
+                className="w-[40%] h-34 rounded-lg"
               /><Image
                 src="https://images.unsplash.com/photo-1618220179428-22790b461013"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[70%] h-34 rounded-lg"
+                className="w-[60%] h-34 rounded-lg"
               />
             </div> <div className="flex w-full gap-4">
               <Image
@@ -59,13 +59,13 @@ export default function About() {
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[70%] h-34 rounded-lg"
+                className="w-[60%] max-lg:w-[60%] h-34 rounded-lg"
               /><Image
                 src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[30%] h-34 rounded-lg"
+                className="w-[40%] max-lg:w-[35%] h-34 rounded-lg"
               />
             </div> <div className="flex w-full gap-4">
               <Image
