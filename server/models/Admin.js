@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const adminSchema = new Schema(
+const adminSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -8,4 +8,7 @@ const adminSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("Admin", adminSchema);
+// Serverless ke liye - model ko cache karta hai
+const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
+
+export default Admin;

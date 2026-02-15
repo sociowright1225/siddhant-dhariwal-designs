@@ -1,27 +1,62 @@
 import express, { json } from "express";
 import { connect } from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
+dotenv.config();
+
 const app = express();
 
-dotenv.config() 
 app.use(cors());
 app.use(json());
 
-connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(console.error);
- 
-app.use("/api/auth", authRoutes);  
-app.use("/api/products", productRoutes); 
-app.get("/test", (req, res)=>{
-  res.send("hello world") 
-})
+// Cached connection for serverless
+let cachedConnection = null;
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server running on port ${process.env.PORT}`),
-);
+async function connectToDatabase() {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
+  try {
+    const connection = await connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      bufferCommands: false,
+    });
+    
+    cachedConnection = connection;
+    console.log("MongoDB Connected");
+    return connection;
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    throw error;
+  }
+}
+
+// Connect before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    res.status(500).json({ message: "Database connection failed" });
+  }
+});
+
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
+app.get("/test", (req, res) => {
+  res.send("hello world");
+});
+
+// Export for Vercel (NO app.listen)
+export default app;
