@@ -14,7 +14,7 @@ import hero3 from "@/public/homepage/hero3.jpg";
 
 export default function Hero() {
   return (
-    <section className="w-full h-screen">
+    <section className="w-full h-screen max-lg:h-[50rem] p-10 pt-13 max-xl:p-4 max-xl:pt-24">
       <Swiper
         modules={[Autoplay, Pagination]}
         slidesPerView={1}
@@ -27,13 +27,13 @@ export default function Hero() {
         className="h-full"
       >
         {/* Slide 1 (Local Image) */}
-        <SwiperSlide className="relative">
+        <SwiperSlide className="relativez">
           <Image
             src={hero1}
             alt="Luxury Interior Design"
             fill
             priority
-            className="object-cover"
+            className="object-cover rounded-2xl"
           />
           <HeroContent />
         </SwiperSlide>
@@ -44,7 +44,7 @@ export default function Hero() {
          src={hero2}
             alt="Modern Living Room"
             fill
-            className="object-cover"
+            className="object-cover rounded-2xl"
           />
           <HeroContent />
         </SwiperSlide>
@@ -55,7 +55,7 @@ export default function Hero() {
              src={hero3}
             alt="Luxury Bedroom"
             fill
-            className="object-cover"
+            className="object-cover rounded-2xl"
           />
           <HeroContent />
         </SwiperSlide>

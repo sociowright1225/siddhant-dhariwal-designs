@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import about1 from "@/public/about/about1.jpg"
-import about2 from "@/public/about/about2.jpg"
-import about3 from "@/public/about/about3.jpg"
+import about1 from "@/public/about/about1.jpg";
+import about2 from "@/public/about/about2.jpg";
+import about3 from "@/public/about/about3.jpg";
 
 export default function About() {
   return (
@@ -23,76 +23,65 @@ export default function About() {
             the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book.
           </p>
- <p className="text-gray-400 text-sm mb-8 max-w-md">
+          <p className="text-gray-400 text-sm mb-8 max-w-md">
             Lorem Ipsum has been the industry’s standard dummy text ever since
             the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book.
           </p>
 
-         
-
-          <a href="/about" className="bg-black max-lg:w-full text-white hover:bg-white hover:text-black border transition px-8 text-white py-3 rounded-full text-base font-medium">
+          <a
+            href="/about"
+            className="bg-black max-lg:w-full text-white hover:bg-white hover:text-black border transition px-8 text-white py-3 rounded-full text-base font-medium"
+          >
             About Us
           </a>
         </div>
 
         {/* RIGHT IMAGES GRID */}
-        <div className="flex gap-4">
-          {/* Large Image */}
-          <div className="col-span-1 row-span-2 rounded-2xl overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1615874959474-d609969a20ed"
-              alt="Interior"
-              width={600}
-              height={800}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Top Right */}
-          <div className="flex flex-col gap-4">
-            <div className="rounded-2xl overflow-hidden">
+        <div className="flex flex-col w-full gap-4">
+           <div className="flex w-full gap-4">
               <Image
                 src="https://images.unsplash.com/photo-1618220179428-22790b461013"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Bottom Right */}
-            <div className="rounded-2xl overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
-                alt="Modern Room"
+                className="w-[30%] h-34 rounded-lg"
+              /><Image
+                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                alt="Decor"
                 width={400}
                 height={300}
-                className="w-full h-full object-cover"
+                className="w-[70%] h-34 rounded-lg"
               />
-            </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            {/* Bottom Right */}
-            <div className="rounded-2xl overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
-                alt="Modern Room"
-                width={400}
-                height={300}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="rounded-2xl overflow-hidden">
+            </div> <div className="flex w-full gap-4">
               <Image
                 src="https://images.unsplash.com/photo-1618220179428-22790b461013"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-full h-full object-cover"
+                className="w-[60%] h-34 rounded-lg"
+              /><Image
+                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                alt="Decor"
+                width={400}
+                height={300}
+                className="w-[40%] h-34 rounded-lg"
+              />
+            </div> <div className="flex w-full gap-4">
+              <Image
+                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                alt="Decor"
+                width={400}
+                height={300}
+                className="w-[40%] h-34 rounded-lg"
+              /><Image
+                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                alt="Decor"
+                width={400}
+                height={300}
+                className="w-[60%] h-34 rounded-lg"
               />
             </div>
-          </div>
         </div>
       </div>
     </section>
