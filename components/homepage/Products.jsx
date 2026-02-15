@@ -36,7 +36,8 @@ export default function Products() {
           </div>
           
           {/* Desktop-only button for better balance, hidden on mobile */}
-          <a href="/products" className="hidden md:block bg-black text-white hover:bg-white hover:text-black border border-black transition px-8 py-3 rounded-full text-sm font-medium">
+          <a href="/products" className="hidden md:block bg-black text-white hover:bg-white
+           hover:text-black border border-black transition max-lg:text-center px-8 py-3 rounded-full text-sm font-medium">
             View All Products
           </a>
         </div>
@@ -87,7 +88,7 @@ export default function Products() {
 
         {/* MOBILE BUTTON (Visible only on small screens) */}
         <div className="flex justify-center mt-4 md:hidden">
-          <a href="/products" className="w-full bg-black text-white py-4 rounded-full text-sm font-medium">
+          <a href="/products" className="w-full bg-black text-white py-4 rounded-full max-lg:text-center text-sm font-medium">
             View All Products
           </a>
         </div>

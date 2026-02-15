@@ -41,7 +41,7 @@ export default function About() {
         <div className="flex flex-col w-full gap-4">
            <div className="flex w-full gap-4">
               <Image
-                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                src="https://images.unsplash.com/photo-1615874959474-d609969a20ed"
                 alt="Decor"
                 width={400}
                 height={300}
@@ -55,13 +55,13 @@ export default function About() {
               />
             </div> <div className="flex w-full gap-4">
               <Image
-                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
                 alt="Decor"
                 width={400}
                 height={300}
                 className="w-[60%] h-34 rounded-lg"
               /><Image
-                src="https://images.unsplash.com/photo-1618220179428-22790b461013"
+                src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
                 alt="Decor"
                 width={400}
                 height={300}
