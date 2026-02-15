@@ -59,13 +59,13 @@ export default function About() {
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[60%] h-34 rounded-lg"
+                className="w-[70%] h-34 rounded-lg"
               /><Image
                 src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
                 alt="Decor"
                 width={400}
                 height={300}
-                className="w-[40%] h-34 rounded-lg"
+                className="w-[30%] h-34 rounded-lg"
               />
             </div> <div className="flex w-full gap-4">
               <Image
