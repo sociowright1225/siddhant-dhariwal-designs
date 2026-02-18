@@ -23,7 +23,7 @@ export default function Hero() {
   const paginationDelay = 4000;
 
   return (
-    <section className="w-full h-screen max-lg:h-[50rem] p-10 pt-13 max-xl:p-4 max-xl:pt-24 relative">
+    <section className="w-full h-screen max-lg:h-[40rem] p-10 pt-13 max-xl:p-4 max-xl:pt-24 relative">
       <style jsx global>{`
         .swiper-pagination-bullets {
           display: flex !important;
