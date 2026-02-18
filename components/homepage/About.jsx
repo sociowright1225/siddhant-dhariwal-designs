@@ -90,7 +90,7 @@ export default function CategorySection() {
                     src={item.img}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform rounded-lg duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform rounded-xl duration-500 group-hover:scale-105"
                   />
 
                   {/* Badge */}
