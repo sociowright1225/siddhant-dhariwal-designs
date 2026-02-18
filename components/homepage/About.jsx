@@ -95,7 +95,7 @@ export default function CategorySection() {
 
                   {/* Badge */}
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-white/20 backdrop-blur-xl text-black text-sm px-4 py-1.5 rounded-full shadow-sm font-medium">
+                    <span className="bg-white/20  text-black text-sm px-4 py-1.5 rounded-full shadow-sm font-medium">
                       {item.title}
                     </span>
                   </div>
