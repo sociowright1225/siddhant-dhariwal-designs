@@ -8,9 +8,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // Local images
-import hero1 from "@/public/homepage/hero.webp";
-import hero2 from "@/public/homepage/hero2.webp";
-import hero3 from "@/public/homepage/hero3.jpg";
+import hero1 from "@/public/homepage/hero1.jpeg";
+import hero2 from "@/public/homepage/hero2.jpeg";
+import hero3 from "@/public/homepage/hero3.jpeg";
 
 const slides = [
   { title: "Collection One", images: [hero1, hero2, hero3] },

@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(null);
 
   const navLinks = [
-    // { name: "Home", href: "/" },
+    { name: "Siddhant Dhariwal", href: "/" },
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
     { name: "Products", href: "/products" },
@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="px-6 py-2 flex items-center  justify-between">
           {/* Logo */}
 
-          <Link href="/" className="flex items-center">
+
             {/* Mobile / Tablet – NAME (wide) */}
             <div className="relative h-12 w-12 ">
               <Image
@@ -46,7 +46,7 @@ export default function Navbar() {
                 priority
               />
             </div> */}
-          </Link>
+       
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex items-center gap-8 font-medium">
