@@ -11,28 +11,45 @@ import "swiper/css/pagination";
 
 // Categories data
 const categories = [
-  { title: "Home Decor", img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed" },
-  { title: "Floor Lamp", img: "https://images.unsplash.com/photo-1618220179428-22790b461013" },
-  { title: "Table Lamp", img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a" },
-  { title: "Pendant Light", img: "https://images.unsplash.com/photo-1618220179428-22790b461013" },
-  { title: "Wall Decor", img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed" },
-  { title: "Chandelier", img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a" },
-
+  {
+    title: "Wall Decor",
+    img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
+  },
+  {
+    title: "Pendent Light",
+    img: "https://images.unsplash.com/photo-1618220179428-22790b461013",
+  },
+  {
+    title: "Table Lamp",
+    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
+  },
+  {
+    title: "Chandelier",
+    img: "https://images.unsplash.com/photo-1618220179428-22790b461013",
+  },
+  {
+    title: "Floor Light",
+    img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
+  },
+  {
+    title: "Home Decor",
+    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
+  },
 ];
 
 export default function CategorySection() {
   return (
     <div className="flex justify-center">
       <section className="py-16 max-w-7xl w-full px-6 lg:px-20 bg-white">
-
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl lg:text-3xl mb-3">
             Find pieces that define your home
           </h2>
           <p className="text-gray-600 text-sm max-w-3xl mx-auto leading-relaxed">
-            Explore our collection by category — whether you&apos;re furnishing your living room,
-            bedroom, or workspace, we have timeless pieces made just for you.
+            Explore our collection by category — whether you&apos;re furnishing
+            your living room, bedroom, or workspace, we have timeless pieces
+            made just for you.
           </p>
         </div>
 
@@ -97,7 +114,6 @@ export default function CategorySection() {
             About Us
           </a>
         </div>
-
       </section>
     </div>
   );
