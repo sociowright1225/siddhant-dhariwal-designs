@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(null);
 
   const navLinks = [
-    { name: "Home", href: "/" },
+    // { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
     { name: "Products", href: "/products" },
@@ -21,14 +21,14 @@ export default function Navbar() {
       <div
         className={`max-w-4xl mx-auto mt-5 bg-white/20 backdrop-blur-xl border ${isOpen ? "max-lg:rounded-xl rounded-full" : "rounded-full"} border-white/20  shadow-lg overflow-hidden`}
       >
-        <div className="px-6 py-2 flex items-center justify-between">
+        <div className="px-6 py-2 flex items-center  justify-between">
           {/* Logo */}
 
-          <Link href="/" className="flex items-center ">
+          <Link href="/" className="flex items-center">
             {/* Mobile / Tablet – NAME (wide) */}
-            <div className="relative h-12 w-40 ">
+            <div className="relative h-12 w-12 ">
               <Image
-                src={name}
+                src={logo}
                 alt="Brand Name"
                 fill
                 className="object-contain"

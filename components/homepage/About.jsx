@@ -1,137 +1,64 @@
 "use client";
 
 import Image from "next/image";
-import about1 from "@/public/about/about1.jpg";
-import about2 from "@/public/about/about2.jpg";
-import about3 from "@/public/about/about3.jpg";
 
-export default function About() {
+// Categories data for easy management 
+// Wall Decor
+// Pendant Light
+// Table Lamp
+// Floor Lamp
+// Home Decor
+const categories = [
+  { title: "Home Decor", img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed" },
+  { title: "Floor Lamp", img: "https://images.unsplash.com/photo-1618220179428-22790b461013" },
+  { title: "Table Lamp", img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a" },
+  { title: "Pendant Light", img: "https://images.unsplash.com/photo-1618220179428-22790b461013" },
+];
+
+export default function CategorySection() {
   return (
-    <section className="py-16 px-6 lg:px-20">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 max-lg:flex max-lg:flex-col-reverse gap-4 items-center">
-        {/* LEFT CONTENT */}
-        <div>
-          <p className="text-sm text-gray-400 mb-2 max-lg:hidden">About Us</p>
+ <div className="flex flex-col justify-center items-center">
+     <section className="py-16 max-w-7xl w-full px-6 lg:px-20 bg-white">
+      <div className="max-w-7xl mx-auto text-center mb-12">
+        {/* HEADER TEXT */}
+        <h2 className="text-2xl lg:text-3xl mb-3 ">
+          Find pieces that define your home
+        </h2>
+        <p className="text-gray-600 text-sm max-w-3xl mx-auto leading-relaxed">
+          Explore our collection by category — whether you&apos;re furnishing your living room, 
+          bedroom, or workspace, we have timeless pieces made just for you.
+        </p>
+      </div>
 
-          <h2 className="text-3xl lg:text-4xl font-semibold leading-tight mb-4">
-            Lorem Ipsum is <br />
-            dummy text of the printing
-          </h2>
-
-          <p className="text-gray-400 text-sm mb-4 max-w-md">
-            Lorem Ipsum has been the industry’s standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book.
-          </p>
-          <p className="text-gray-400 text-sm mb-8 max-w-md">
-            Lorem Ipsum has been the industry’s standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book.
-          </p>
-
-          <a
-            href="/about"
-            className="bg-black max-lg:w-full text-white hover:bg-white hover:text-black border transition px-8 text-white py-3 rounded-full text-base font-medium"
-          >
-            About Us
-          </a>
-        </div>
-
-    {/* RIGHT IMAGES GRID */}
-<div className="flex flex-col w-full gap-4">
-
-  {/* ROW 1 */}
-  <div className="flex w-full gap-4">
-    {/* Image 1 */}
-    <div className="relative w-[40%]">
-      <Image
-        src="https://images.unsplash.com/photo-1615874959474-d609969a20ed"
-        alt="Wall Decor"
-        width={400}
-        height={300}
-        className="w-full h-34 rounded-lg rounded-tl-2xl object-cover"
-      />
-      <span className="absolute top-2 left-2 bg-white text-black text-xs px-3 py-1 rounded-full">
-        Wall
-      </span>
-    </div>
-
-    {/* Image 2 */}
-    <div className="relative w-[60%]">
-      <Image
-        src="https://images.unsplash.com/photo-1618220179428-22790b461013"
-        alt="Pendant Light"
-        width={400}
-        height={300}
-        className="w-full h-34 rounded-lg rounded-tr-2xl object-cover"
-      />
-      <span className="absolute top-2 left-2 bg-white text-black text-xs px-3 py-1 rounded-full">
-        Pendant
-      </span>
-    </div>
-  </div>
-
-  {/* ROW 2 */}
-  <div className="flex w-full gap-4">
-    <div className="relative w-[60%]">
-      <Image
-        src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
-        alt="Table Lamp"
-        width={400}
-        height={300}
-        className="w-full h-34 rounded-lg object-cover"
-      />
-      <span className="absolute top-2 left-2 bg-white text-black text-xs px-3 py-1 rounded-full">
-        Table
-      </span>
-    </div>
-
-    <div className="relative w-[40%]">
-      <Image
-        src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a"
-        alt="Chandelier"
-        width={400}
-        height={300}
-        className="w-full h-34 rounded-lg object-cover"
-      />
-      <span className="absolute top-2 left-2 bg-white text-black text-xs px-3 py-1 rounded-full">
-        Chandelier
-      </span>
-    </div>
-  </div>
-
-  {/* ROW 3 */}
-  <div className="flex w-full gap-4">
-    <div className="relative w-[40%]">
-      <Image
-        src="https://images.unsplash.com/photo-1618220179428-22790b461013"
-        alt="Floor Lamp"
-        width={400}
-        height={300}
-        className="w-full h-34 rounded-lg rounded-bl-2xl object-cover"
-      />
-      <span className="absolute top-2 left-2 bg-white text-black text-xs px-3 py-1 rounded-full">
-        Floor
-      </span>
-    </div>
-
-    <div className="relative w-[60%]">
-      <Image
-        src="https://images.unsplash.com/photo-1618220179428-22790b461013"
-        alt="Home Decor"
-        width={400}
-        height={300}
-        className="w-full h-34 rounded-lg rounded-br-2xl object-cover"
-      />
-      <span className="absolute top-2 left-2 bg-white text-black text-xs px-3 py-1 rounded-full">
-        Home Decor
-      </span>
-    </div>
-  </div>
-
-</div>
-
+      {/* CATEGORY GRID */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {categories.map((item, index) => (
+          <div key={index} className="relative group cursor-pointer overflow-hidden rounded-sm">
+            {/* Image Container */}
+            <div className="relative aspect-[3/4] w-full border border-gray-100">
+              <Image
+                src={item.img}
+                alt={item.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              
+              {/* Badge/Label */}
+              <div className="absolute top-4 left-4 z-10">
+                <span className="bg-white/90 backdrop-blur-sm text-black text-sm px-4 py-1.5 rounded-full shadow-sm font-medium">
+                  {item.title}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center mt-16 px-6">
+        <a href="/projects" className="w-full sm:w-auto max-lg:text-center bg-black text-white hover:bg-white hover:text-black border border-black transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium">
+          About Us
+        </a>
       </div>
     </section>
+ </div>
   );
 }
