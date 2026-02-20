@@ -97,7 +97,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="w-full text-center py-2 hover:bg-white/10"
+                className={`w-full text-center py-2 hover:bg-white/10 ${spaceGrotesk.className}`}
               >
                 {link.name}
               </Link>
