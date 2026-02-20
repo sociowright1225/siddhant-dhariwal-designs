@@ -5,12 +5,19 @@ import Link from "next/link";
 import name from "@/public/Navbar/name.png";
 import logo from "@/public/Navbar/logo.png";
 import { Menu, X } from "lucide-react"; // Install lucide-react or use SVG icons
+import { Space_Grotesk } from "next/font/google";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["500"],
+
+});
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(null);
 
   const navLinks = [
-    { name: "Siddhant Dhariwal", href: "/" },
+    { name: "SIDDHANT DHARIWAL", href: "/" },
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
     { name: "Products", href: "/products" },
@@ -54,7 +61,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="hover:text-black transition-colors"
+               className={`hover:text-black transition-colors ${spaceGrotesk.className}`}
               >
                 {link.name}
               </Link>
