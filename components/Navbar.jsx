@@ -91,7 +91,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/contact"
-              className="sm:hidden px-6 py-2 rounded-full bg-black text-white text-sm font-medium"
+              className="md:hidden px-6 py-2 rounded-full bg-black text-white text-sm font-medium"
             >
               Contact Us
             </Link>
