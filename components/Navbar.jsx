@@ -59,7 +59,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <Link
               href="/contact"
-              className="hidden md:block px-5 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-white hover:text-black border border-black transition"
+              className="hidden sm:block px-5 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-white hover:text-black border border-black transition"
             >
               Contact Us
             </Link>
@@ -91,7 +91,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/contact"
-              className="md:hidden px-6 py-2 rounded-full bg-black text-white text-sm font-medium"
+              className="sm:hidden px-6 py-2 rounded-full bg-black text-white text-sm font-medium"
             >
               Contact Us
             </Link>

@@ -1,37 +1,36 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import Image from "next/image";
+
 import hero1 from "@/public/homepage/hero1.jpeg";
 import hero2 from "@/public/homepage/hero2.jpeg";
 import hero3 from "@/public/homepage/hero3.jpeg";
-import Image from "next/image";
 
 const images = [
-  hero1,
-  hero2,
-  hero3,
-  hero1,
-  hero2,
-  hero3,
-  hero1,
-  hero2,
-  hero3,
-  hero1,
-  hero2,
-  hero3,
+  hero1, hero2, hero3,
+  hero1, hero2, hero3,
+  hero1, hero2, hero3,
+  hero1, hero2, hero3,
   hero3,
 ];
 
 export default function HeroCarousel() {
   const stageRef = useRef(null);
   const boxesRef = useRef([]);
+  const overlayRef = useRef(null);
 
+  const [activeImage, setActiveImage] = useState(null);
+
+  // ===============================
+  // 3D Carousel Animation
+  // ===============================
   useEffect(() => {
     const boxes = boxesRef.current;
     const totalImages = images.length;
     const angleStep = 360 / totalImages;
-    const radius = 400; // Curve ko thoda flat rakhne ke liye bada radius
+    const radius = 400;
 
     gsap.set(stageRef.current, {
       perspective: 1000,
@@ -46,10 +45,9 @@ export default function HeroCarousel() {
       });
     });
 
-    // Continuous rotation
     const animation = gsap.to(boxes, {
       rotationY: "-=360",
-      duration: 40, // Slow speed for premium feel
+      duration: 40,
       ease: "none",
       repeat: -1,
       modifiers: {
@@ -60,11 +58,25 @@ export default function HeroCarousel() {
     return () => animation.kill();
   }, []);
 
+  // ===============================
+  // Zoom Animation
+  // ===============================
+  useEffect(() => {
+    if (activeImage && overlayRef.current) {
+      gsap.fromTo(
+        overlayRef.current.firstChild,
+        { scale: 0.6, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }
+      );
+    }
+  }, [activeImage]);
+
   return (
-    <div className="relative pt-28 bg-[#F9F7F2] min-h-screen flex flex-col items-center justify-start  overflow-hidden font-sans">
-      {/* --- Main Heading --- */}
+    <div className="relative pt-28 bg-[#F9F7F2] min-h-screen flex flex-col items-center justify-start overflow-hidden font-sans">
+      
+      {/* ================= Heading ================= */}
       <div className="text-center font-serif z-10 px-4">
-        <h1 className="text-5xl  text-[#1a1a1a] tracking-tight leading-tight">
+        <h1 className="text-5xl text-[#1a1a1a] tracking-tight leading-tight">
           Engage Audiences <br /> with Stunning Videos
         </h1>
 
@@ -74,9 +86,8 @@ export default function HeroCarousel() {
         </p>
       </div>
 
-      {/* --- 3D Carousel Section --- */}
-      <div className="relative  w-full h-[400px] flex items-center justify-center">
-        {/* Curved Container */}
+      {/* ================= 3D Carousel ================= */}
+      <div className="relative w-full h-[400px] flex items-center justify-center">
         <div
           ref={stageRef}
           className="relative w-[180px] h-[300px] md:w-[180px] md:h-[240px] flex items-center justify-center"
@@ -97,19 +108,37 @@ export default function HeroCarousel() {
                 height={1000}
                 priority
                 alt="creators work"
-                className="w-full h-full object-cover"
+                onClick={() => setActiveImage(src)}
+                className="w-full h-full object-cover cursor-pointer"
               />
             </div>
           ))}
         </div>
       </div>
 
-      {/* --- CTA & Decorations --- */}
+      {/* ================= CTA ================= */}
       <div className="pb-20 flex flex-col items-center gap-4 z-10">
         <button className="bg-black hover:bg-white text-white hover:text-black hover:border-b px-10 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:scale-105 active:scale-95">
           Get Started
         </button>
       </div>
+
+      {/* ================= Fullscreen Zoom ================= */}
+      {activeImage && (
+        <div
+          ref={overlayRef}
+          className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center"
+          onClick={() => setActiveImage(null)}
+        >
+          <Image
+            src={activeImage}
+            alt="Zoomed Image"
+            width={1600}
+            height={1600}
+            className="max-w-[90vw] max-h-[90vh] rounded-xl object-contain"
+          />
+        </div>
+      )}
     </div>
   );
 }
