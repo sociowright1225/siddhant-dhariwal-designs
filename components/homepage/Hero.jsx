@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
+import { X } from "lucide-react";
 
 import hero1 from "@/public/homepage/hero1.jpeg";
 import hero2 from "@/public/homepage/hero2.jpeg";
@@ -64,7 +65,7 @@ export default function HeroCarousel() {
   useEffect(() => {
     if (activeImage && overlayRef.current) {
       gsap.fromTo(
-        overlayRef.current.firstChild,
+        overlayRef.current.querySelector(".zoom-image"),
         { scale: 0.6, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }
       );
@@ -73,7 +74,7 @@ export default function HeroCarousel() {
 
   return (
     <div className="relative pt-28 bg-[#F9F7F2] min-h-screen flex flex-col items-center justify-start overflow-hidden font-sans">
-      
+
       {/* ================= Heading ================= */}
       <div className="text-center font-serif z-10 px-4">
         <h1 className="text-5xl text-[#1a1a1a] tracking-tight leading-tight">
@@ -130,12 +131,22 @@ export default function HeroCarousel() {
           className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center"
           onClick={() => setActiveImage(null)}
         >
+          {/* Close Button */}
+          <button
+            onClick={() => setActiveImage(null)}
+            className="absolute top-6 right-6 z-[1000] bg-white/90 hover:bg-white text-black p-2 rounded-full shadow-lg transition"
+          >
+            <X size={24} />
+          </button>
+
+          {/* Image */}
           <Image
             src={activeImage}
             alt="Zoomed Image"
             width={1600}
             height={1600}
-            className="max-w-[90vw] max-h-[90vh] rounded-xl object-contain"
+            onClick={(e) => e.stopPropagation()}
+            className="zoom-image max-w-[90vw] max-h-[90vh] rounded-xl object-contain"
           />
         </div>
       )}
