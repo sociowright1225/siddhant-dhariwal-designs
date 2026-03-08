@@ -128,7 +128,7 @@ export default function HeroCarousel() {
 
       {/* ================= CTA ================= */}
       <div className="pb-20 flex flex-col items-center gap-4 z-10">
-        <a href="/contact" className="bg-black hover:bg-white text-white hover:text-black hover:border-b px-10 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:scale-105 active:scale-95">
+        <a href="/product" className="bg-black hover:bg-white text-white hover:text-black hover:border-b px-10 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:scale-105 active:scale-95">
           Explore Our World
         </a>
       </div>
