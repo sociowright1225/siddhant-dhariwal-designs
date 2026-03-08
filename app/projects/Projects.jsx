@@ -97,7 +97,7 @@ export default function Projects() {
               <div className="flex flex-col sm:flex-row gap-4 max-w-full">
                 
                 {/* Small image */}
-                <div className="w-full sm:w-1/3">
+                {/* <div className="w-full sm:w-1/3">
                   <Image
                     src={project.images[1]}
                     alt=""
@@ -105,10 +105,10 @@ export default function Projects() {
                     height={300}
                     className="rounded-xl object-cover w-full h-auto"
                   />
-                </div>
+                </div> */}
 
                 {/* Main image */}
-                <div className="w-full sm:w-2/3">
+                <div className="w-full ">
                   <Image
                     src={project.images[0]}
                     alt={project.title}
