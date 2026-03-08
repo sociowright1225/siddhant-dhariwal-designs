@@ -75,9 +75,9 @@ export default function Projects() {
           >
             {/* TEXT */}
             <div className={`${isReverse ? "lg:order-2" : "lg:order-1"}`}>
-              <span className="text-sm text-gray-400">
+              {/* <span className="text-sm text-gray-400">
                 {project.id} — 06
-              </span>
+              </span> */}
 
               <h2 className="text-3xl md:text-4xl font-semibold mt-3">
                 {project.title}
