@@ -25,16 +25,18 @@ export default function CTA() {
         <div className="max-w-2xl text-center px-6">
           
           <p className="text-xs md:text-sm tracking-[0.2em] text-white/90 mb-4 uppercase">
-            Comfort • Style • Luxury
+            Statement • Style • Luxury
           </p>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-6">
-            Discover Elegant Comfort
+            Light Is the First Thing You Feel in a Room
+
           </h2>
 
           <p className="text-sm md:text-lg text-white/80 mb-10 max-w-lg mx-auto leading-relaxed">
-            Elevate your living space with thoughtfully designed furniture
-            that blends comfort, elegance, and timeless craftsmanship.
+            Your space deserves more than illumination <br /> it deserves atmosphere. At Siddhant Dhariwal
+Designs, we create lighting that speaks before a word is spoken.
+
           </p>
 
           {/* BUTTONS - Mobile par stack, Small screen se row mein */}

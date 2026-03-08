@@ -44,12 +44,12 @@ export default function CategorySection() {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl lg:text-3xl mb-3">
-            Find pieces that define your home
+            Illuminate Every Corner of Your Home
           </h2>
           <p className="text-gray-600 text-sm max-w-3xl mx-auto leading-relaxed">
-            Explore our collection by category — whether you&apos;re furnishing
-            your living room, bedroom, or workspace, we have timeless pieces
-            made just for you.
+            Browse our curated categories — from statement chandeliers to
+            intimate table lamps, each piece is designed to bring warmth,
+            character, and beauty to your space.
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export default function CategorySection() {
             href="/projects"
             className="w-full sm:w-auto text-center bg-black text-white hover:bg-white hover:text-black border border-black transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium"
           >
-            About Us
+           Discover All Categories
           </a>
         </div>
       </section>

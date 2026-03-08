@@ -11,4 +11,4 @@ const adminSchema = new mongoose.Schema(
 // Serverless ke liye - model ko cache karta hai
 const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
 
-export default Admin;
+export default Admin; 

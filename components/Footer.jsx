@@ -30,7 +30,7 @@ export default function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="hover: cursor-pointer">Our Clients</li>
             <li className="hover: cursor-pointer">Contact</li>
-            <li className="hover: cursor-pointer">Blog</li>
+           
           </ul>
         </div>
 
@@ -39,9 +39,8 @@ export default function Footer() {
           <h3 className=" font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-3 text-sm">
             <li className="hover: cursor-pointer">Projects</li>
-            <li className="hover: cursor-pointer">Assets</li>
-            <li className="hover: cursor-pointer">Login</li>
-            <li className="hover: cursor-pointer">Sign Up</li>
+            <li className="hover: cursor-pointer">Products</li>
+           
           </ul>
         </div>
 
@@ -50,11 +49,10 @@ export default function Footer() {
           <h3 className=" font-semibold mb-4">Contact</h3>
          
           <p className="text-sm mb-2">📞 +91 8128202359</p>
-          <p className="text-sm mb-2">✉️ letsdesignsid23@gmail.com</p>
+          <p className="text-sm mb-2">✉️  letsdesignsid23@gmail.com</p>
            <p className="text-sm text-gray-400">
-            202, 2nd Floor, Ajmera Midtown,
-454, 456/458, Corner of Kalbadevi and, Popatwadi Ln, Marine Lines, Mumbai,
-Maharashtra 400002
+            202, 2nd Floor, Ajmera Midtown, 454, 456/458, Corner of Kalbadevi and Popatwadi Lane,
+Marine Lines, Mumbai, Maharashtra 400002
 
           </p>
         </div>

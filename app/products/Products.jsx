@@ -38,10 +38,13 @@ export default function CategoryList() {
           <p className=" text-sm font-medium mb-2">Products</p>
           <div className="flex flex-col md:flex-row justify-between items-start gap-6">
             <h2 className="text-3xl md:text-4xl font-serif  max-w-md leading-tight">
-              Lorem Ipsum is dummy text of the printing
+              Lighting That Makes a Statement
             </h2>
             <p className="text-gray-400 text-sm max-w-lg">
-              Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+              Each piece in our collection is thoughtfully designed and
+              meticulously crafted — because great light isn't just functional,
+              it's transformative. Discover luminaires that define the rooms
+              they inhabit.
             </p>
           </div>
         </div>
@@ -51,7 +54,7 @@ export default function CategoryList() {
           {categoryData.map((cat, index) => (
             <Link
               key={index}
-              href={`/products/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, '-'))}`}
+              href={`/products/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, "-"))}`}
               className="group flex flex-col items-center"
             >
               {/* Card Container */}
@@ -66,8 +69,6 @@ export default function CategoryList() {
                     />
                   </div>
                 )}
-                
-               
               </div>
 
               {/* Category Name */}

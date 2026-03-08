@@ -13,7 +13,7 @@ export default function page() {
       <About/>
       <Projects/>
       <Products/>
-      <ServicesStackSection/>
+      {/* <ServicesStackSection/> */}
       <CTA/>
     </div>
   )

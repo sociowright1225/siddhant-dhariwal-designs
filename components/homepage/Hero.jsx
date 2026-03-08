@@ -10,10 +10,18 @@ import hero2 from "@/public/homepage/hero2.jpeg";
 import hero3 from "@/public/homepage/hero3.jpeg";
 
 const images = [
-  hero1, hero2, hero3,
-  hero1, hero2, hero3,
-  hero1, hero2, hero3,
-  hero1, hero2, hero3,
+  hero1,
+  hero2,
+  hero3,
+  hero1,
+  hero2,
+  hero3,
+  hero1,
+  hero2,
+  hero3,
+  hero1,
+  hero2,
+  hero3,
   hero3,
 ];
 
@@ -67,23 +75,24 @@ export default function HeroCarousel() {
       gsap.fromTo(
         overlayRef.current.querySelector(".zoom-image"),
         { scale: 0.6, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }
+        { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
       );
     }
   }, [activeImage]);
 
   return (
     <div className="relative pt-28 bg-[#F9F7F2] min-h-screen flex flex-col items-center justify-start overflow-hidden font-sans">
-
       {/* ================= Heading ================= */}
       <div className="text-center font-serif z-10 px-4">
         <h1 className="text-5xl text-[#1a1a1a] tracking-tight leading-tight">
-          Engage Audiences <br /> with Stunning Videos
+          Where Light Becomes Art
         </h1>
 
         <p className="mt-6 text-gray-600 max-w-xl mx-auto text-lg leading-relaxed">
-          Boost Your Brand with High-Impact Short Videos from our expert content
-          creators. Our team is ready to propel your business forward.
+          We craft bespoke lighting experiences that transform spaces into
+          stories. Explore our world of handcrafted luminaires, sculptural
+          pendants, and statement lighting — designed for those who refuse to
+          settle for ordinary.
         </p>
       </div>
 
@@ -120,7 +129,7 @@ export default function HeroCarousel() {
       {/* ================= CTA ================= */}
       <div className="pb-20 flex flex-col items-center gap-4 z-10">
         <button className="bg-black hover:bg-white text-white hover:text-black hover:border-b px-10 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:scale-105 active:scale-95">
-          Get Started
+          Explore Our World
         </button>
       </div>
 
