@@ -87,9 +87,9 @@ export default function Projects() {
                 {project.desc}
               </p>
 
-              <button className="mt-6 inline-flex items-center gap-2 border border-black rounded-full px-6 py-2 text-sm hover:bg-black hover:text-white transition">
-                View Project →
-              </button>
+              <a href="/contact" className="mt-6 inline-flex items-center gap-2 border border-black rounded-full px-6 py-2 text-sm hover:bg-black hover:text-white transition">
+               Explore Our World
+              </a>
             </div>
 
             {/* IMAGES */}
