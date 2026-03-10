@@ -49,7 +49,7 @@ export default function AdminDashboard() {
       setItems(data);
     } catch (err) {
       console.error(`Fetch error (${activeTab}):`, err);
-      setItems([]); 
+      setItems([]);
     } finally {
       setFetching(false);
     }
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     setLoading(true);
     const endpoint = activeTab === "products" ? "/products" : "/projects";
-    
+
     try {
       const formData = new FormData();
       Object.keys(form).forEach((key) => {
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
             <LayoutDashboard className="text-indigo-400" /> Admin
           </h1>
         </div>
-        
+
         <nav className="flex-1 p-4 mt-4 space-y-2">
           <button
             onClick={() => setActiveTab("products")}
@@ -176,7 +176,7 @@ export default function AdminDashboard() {
                 : "text-slate-400 hover:bg-slate-800 hover:text-white"
             }`}
           >
-            <Package size={20} /> 
+            <Package size={20} />
             <span className="font-medium">Products</span>
           </button>
 
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                 : "text-slate-400 hover:bg-slate-800 hover:text-white"
             }`}
           >
-            <Briefcase size={20} /> 
+            <Briefcase size={20} />
             <span className="font-medium">Projects</span>
           </button>
         </nav>
@@ -209,7 +209,9 @@ export default function AdminDashboard() {
               <h2 className="text-3xl font-bold text-slate-800 capitalize">
                 {activeTab}
               </h2>
-              <p className="text-slate-500 mt-1">Manage your website's {activeTab} gallery and details.</p>
+              <p className="text-slate-500 mt-1">
+                Manage your website's {activeTab} gallery and details.
+              </p>
             </div>
           </header>
 
@@ -219,7 +221,10 @@ export default function AdminDashboard() {
               <div className="p-5 border-b border-gray-100 bg-gray-50/50">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <Search
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
                     <input
                       type="text"
                       placeholder={`Search ${activeTab}...`}
@@ -228,7 +233,7 @@ export default function AdminDashboard() {
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
-                  
+
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-sm bg-white px-3 py-2 border border-gray-200 rounded-xl">
                       <Filter size={14} className="text-gray-400" />
@@ -238,7 +243,9 @@ export default function AdminDashboard() {
                         className="bg-transparent font-medium outline-none cursor-pointer"
                       >
                         {categories.map((cat) => (
-                          <option key={cat} value={cat}>{cat}</option>
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -249,34 +256,66 @@ export default function AdminDashboard() {
               <div className="flex-1 overflow-y-auto max-h-[calc(100vh-300px)]">
                 {fetching ? (
                   <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-                    <Loader2 className="animate-spin mb-3 text-indigo-500" size={32} />
+                    <Loader2
+                      className="animate-spin mb-3 text-indigo-500"
+                      size={32}
+                    />
                     <p>Fetching {activeTab}...</p>
                   </div>
                 ) : filteredItems.length > 0 ? (
                   <div className="divide-y divide-gray-100">
                     {filteredItems.map((item) => (
-                      <div key={item._id} className="p-4 flex items-center gap-4 hover:bg-slate-50 transition-colors group">
+                      <div
+                        key={item._id}
+                        className="p-4 flex items-center gap-4 hover:bg-slate-50 transition-colors group"
+                      >
                         <div className="h-16 w-16 rounded-xl bg-gray-100 overflow-hidden border border-gray-200 flex-shrink-0">
                           {item.image?.url ? (
-                            <img src={item.image.url} alt="" className="h-full w-full object-cover" />
+                            <img
+                              src={item.image.url}
+                              alt=""
+                              className="h-full w-full object-cover"
+                            />
                           ) : (
-                            <div className="h-full w-full flex items-center justify-center"><ImageIcon size={20} className="text-gray-300" /></div>
+                            <div className="h-full w-full flex items-center justify-center">
+                              <ImageIcon size={20} className="text-gray-300" />
+                            </div>
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-slate-800 truncate">{item.title}</h4>
-                          <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-500 uppercase font-bold">{item.category}</span>
-                          {activeTab === "products" && <p className="text-indigo-600 font-bold text-sm mt-1">₹{item.price}</p>}
+                          <h4 className="font-semibold text-slate-800 truncate">
+                            {item.title}
+                          </h4>
+                          <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-500 uppercase font-bold">
+                            {item.category}
+                          </span>
+                          {activeTab === "products" && (
+                            <p className="text-indigo-600 font-bold text-sm mt-1">
+                              ₹{item.price}
+                            </p>
+                          )}
                         </div>
                         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => handleEdit(item)} className="p-2 bg-white text-slate-600 hover:text-indigo-600 border border-gray-200 rounded-lg shadow-sm"><Edit3 size={16} /></button>
-                          <button onClick={() => removeItem(item._id)} className="p-2 bg-white text-slate-600 hover:text-red-600 border border-gray-200 rounded-lg shadow-sm"><Trash2 size={16} /></button>
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className="p-2 bg-white text-slate-600 hover:text-indigo-600 border border-gray-200 rounded-lg shadow-sm"
+                          >
+                            <Edit3 size={16} />
+                          </button>
+                          <button
+                            onClick={() => removeItem(item._id)}
+                            className="p-2 bg-white text-slate-600 hover:text-red-600 border border-gray-200 rounded-lg shadow-sm"
+                          >
+                            <Trash2 size={16} />
+                          </button>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="py-20 text-center text-gray-400">No items found in {activeTab}</div>
+                  <div className="py-20 text-center text-gray-400">
+                    No items found in {activeTab}
+                  </div>
                 )}
               </div>
             </div>
@@ -287,14 +326,25 @@ export default function AdminDashboard() {
                 <div className="p-5 border-b border-gray-100 bg-slate-800 text-white flex justify-between items-center">
                   <h3 className="font-bold uppercase tracking-wider text-sm flex items-center gap-2">
                     {form._id ? <Edit3 size={16} /> : <Plus size={16} />}
-                    {form._id ? `Edit ${activeTab.slice(0,-1)}` : `Add ${activeTab.slice(0,-1)}`}
+                    {form._id
+                      ? `Edit ${activeTab.slice(0, -1)}`
+                      : `Add ${activeTab.slice(0, -1)}`}
                   </h3>
-                  {form._id && <button onClick={resetForm} className="hover:rotate-90 transition-transform"><X size={20} /></button>}
+                  {form._id && (
+                    <button
+                      onClick={resetForm}
+                      className="hover:rotate-90 transition-transform"
+                    >
+                      <X size={20} />
+                    </button>
+                  )}
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-5">
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">Title</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                      Title
+                    </label>
                     <input
                       name="title"
                       value={form.title}
@@ -306,18 +356,31 @@ export default function AdminDashboard() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">Category</label>
-                      <input
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                        Category
+                      </label>
+
+                      <select
                         name="category"
                         value={form.category}
                         onChange={handleChange}
-                        className="w-full border-b-2 border-gray-100 py-2 focus:border-indigo-500 outline-none transition-colors"
+                        className="w-full border-b-2 border-gray-100 py-2 focus:border-indigo-500 outline-none transition-colors bg-transparent"
                         required
-                      />
+                      >
+                        <option value="">Select Category</option>
+                        <option value="Wall Decor">Wall Decor</option>
+                        <option value="Pendent Light">Pendent Light</option>
+                        <option value="Table Lamp">Table Lamp</option>
+                        <option value="Chandelier">Chandelier</option>
+                        <option value="Floor Light">Floor Light</option>
+                        <option value="Home Decor">Home Decor</option>
+                      </select>
                     </div>
                     {activeTab === "products" && (
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">Price (₹)</label>
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                          Price (₹)
+                        </label>
                         <input
                           name="price"
                           type="number"
@@ -330,7 +393,9 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">Description</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                      Description
+                    </label>
                     <textarea
                       name="description"
                       value={form.description}
@@ -341,14 +406,24 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">Featured Image</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                      Featured Image
+                    </label>
                     <div className="relative group border-2 border-dashed border-gray-200 rounded-2xl p-4 hover:border-indigo-400 transition-all cursor-pointer bg-slate-50 flex items-center justify-center min-h-[160px]">
                       {preview ? (
                         <div className="relative w-full h-32">
-                          <img src={preview} alt="Preview" className="w-full h-full object-contain rounded-lg" />
+                          <img
+                            src={preview}
+                            alt="Preview"
+                            className="w-full h-full object-contain rounded-lg"
+                          />
                           <button
                             type="button"
-                            onClick={(e) => { e.stopPropagation(); setPreview(null); setForm({...form, image: null}); }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setPreview(null);
+                              setForm({ ...form, image: null });
+                            }}
                             className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1.5 shadow-lg"
                           >
                             <X size={14} />
@@ -359,10 +434,18 @@ export default function AdminDashboard() {
                           <div className="bg-white p-3 rounded-full shadow-sm inline-block mb-2 text-slate-400 group-hover:text-indigo-500 transition-colors">
                             <ImageIcon size={24} />
                           </div>
-                          <p className="text-[11px] text-slate-500 font-medium">Click to upload or drag & drop</p>
+                          <p className="text-[11px] text-slate-500 font-medium">
+                            Click to upload or drag & drop
+                          </p>
                         </div>
                       )}
-                      <input name="image" type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={handleChange} />
+                      <input
+                        name="image"
+                        type="file"
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        accept="image/*"
+                        onChange={handleChange}
+                      />
                     </div>
                   </div>
 
@@ -372,7 +455,13 @@ export default function AdminDashboard() {
                       ${form._id ? "bg-indigo-600 hover:bg-indigo-700" : "bg-emerald-500 hover:bg-emerald-600 hover:-translate-y-0.5"} 
                       disabled:opacity-50 active:scale-95`}
                   >
-                    {loading ? <Loader2 className="animate-spin" size={20} /> : form._id ? `Update ${activeTab.slice(0,-1)}` : `Save ${activeTab.slice(0,-1)}`}
+                    {loading ? (
+                      <Loader2 className="animate-spin" size={20} />
+                    ) : form._id ? (
+                      `Update ${activeTab.slice(0, -1)}`
+                    ) : (
+                      `Save ${activeTab.slice(0, -1)}`
+                    )}
                   </button>
                 </form>
               </div>
