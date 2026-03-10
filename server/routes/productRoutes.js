@@ -20,7 +20,7 @@ router.post(
 
       const product = await Product.create({
         title: req.body.title,
-        slug: slugify(req.body.title),
+        slug: req.body.title,
         description: req.body.description,
         price: req.body.price,
         category: req.body.category,
@@ -86,7 +86,7 @@ router.put(
 
       if (req.body.title) {
         product.title = req.body.title;
-        product.slug = slugify(req.body.title);
+        product.slug = req.body.title;
       }
 
       product.description = req.body.description ?? product.description;
