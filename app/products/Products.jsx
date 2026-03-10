@@ -12,6 +12,7 @@ import "swiper/css/navigation";
 
 export default function CategoryList() {
   const [categories, setCategories] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,6 +32,7 @@ export default function CategoryList() {
         });
 
         setCategories(grouped);
+        setLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -39,12 +41,30 @@ export default function CategoryList() {
     fetchProducts();
   }, []);
 
+  // 🔥 Scroll after products load
+  useEffect(() => {
+    if (!loading) {
+      const hash = window.location.hash;
+
+      if (hash) {
+        const element = document.querySelector(hash);
+
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }, 200);
+        }
+      }
+    }
+  }, [loading]);
+
   return (
     <section className="py-16 px-6">
       <div className="max-w-7xl mx-auto space-y-16">
         {Object.entries(categories).map(([category, products]) => {
-          
-          // slug create for id
           const slug = category.toLowerCase().replace(/\s+/g, "-");
 
           return (
@@ -71,7 +91,7 @@ export default function CategoryList() {
               >
                 {products.map((product) => (
                   <SwiperSlide key={product._id}>
-                    <div className="block group">
+                    <div className="group">
 
                       <div className="relative aspect-square overflow-hidden rounded-2xl">
                         <Image
