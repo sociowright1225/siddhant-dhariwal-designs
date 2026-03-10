@@ -13,27 +13,27 @@ import "swiper/css/pagination";
 const categories = [
   {
     title: "Wall Decor",
-    img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
+    img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163877/products/z0tf1qgjly5i85rrafsr.jpg",
   },
   {
     title: "Pendent Light",
-    img: "https://images.unsplash.com/photo-1618220179428-22790b461013",
+    img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163107/products/puwlh4vn2hhnfhtcs2sb.jpg",
   },
   {
     title: "Table Lamp",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
+    img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773162945/products/o2mhjbzetghoro8kg67l.jpg",
   },
   {
     title: "Chandelier",
-    img: "https://images.unsplash.com/photo-1618220179428-22790b461013",
+    img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163613/products/s0w6bqgg2pdptlsu9ql6.png",
   },
   {
     title: "Floor Light",
-    img: "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
+    img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1771137487/products/awknls8ljcdwopq2fyhf.jpg",
   },
   {
     title: "Home Decor",
-    img: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
+    img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163676/products/g5qh0wpb6o003vaidwo9.png",
   },
 ];
 
