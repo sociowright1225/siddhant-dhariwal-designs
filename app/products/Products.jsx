@@ -2,82 +2,102 @@
 
 import api from "@/lib/api";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+
 export default function CategoryList() {
-  const [categoryData, setCategoryData] = useState([]);
+  const [categories, setCategories] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducts = async () => {
       try {
         const { data } = await api.get("/products");
-        const categoriesMap = {};
+
+        const grouped = {};
 
         data.forEach((product) => {
-          if (!categoriesMap[product.category]) {
-            categoriesMap[product.category] = {
-              name: product.category,
-              imageUrl: product.image?.url || null,
-            };
+          const category = product.category?.trim();
+
+          if (!grouped[category]) {
+            grouped[category] = [];
           }
+
+          grouped[category].push(product);
         });
-        setCategoryData(Object.values(categoriesMap));
-      } catch (error) {
-        console.error("Error fetching categories:", error);
+
+        setCategories(grouped);
+      } catch (err) {
+        console.error(err);
       }
     };
-    fetchData();
+
+    fetchProducts();
   }, []);
 
   return (
-    <section className=" min-h-screen py-16 px-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="mb-12">
-          <p className=" text-sm font-medium mb-2">Products</p>
-          <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-            <h2 className="text-3xl md:text-4xl font-serif  max-w-md leading-tight">
-              Lighting That Makes a Statement
-            </h2>
-            <p className="text-gray-400 text-sm max-w-lg">
-              Each piece in our collection is thoughtfully designed and
-              meticulously crafted — because great light isn't just functional,
-              it's transformative. Discover luminaires that define the rooms
-              they inhabit.
-            </p>
-          </div>
-        </div>
+    <section className="py-16 px-6">
+      <div className="max-w-7xl mx-auto space-y-16">
+        {Object.entries(categories).map(([category, products]) => {
+          
+          // slug create for id
+          const slug = category.toLowerCase().replace(/\s+/g, "-");
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categoryData.map((cat, index) => (
-            <Link
-              key={index}
-              href={`/products/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, "-"))}`}
-              className="group flex flex-col items-center"
-            >
-              {/* Card Container */}
-              <div className="relative w-full aspect-square  rounded-[2rem] overflow-hidden flex items-center justify-center transition-all duration-300 shadow-lg">
-                {cat.imageUrl && (
-                  <div className="relative w-full h-full transform transition-transform duration-500 group-hover:scale-110">
-                    <Image
-                      src={cat.imageUrl}
-                      alt={cat.name}
-                      fill
-                      className=" object-cover" // Contain rakha hai taaki furniture kote nahi
-                    />
-                  </div>
-                )}
+          return (
+            <div key={category} id={slug}>
+              
+              {/* Category Title */}
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-semibold capitalize">
+                  {category}
+                </h2>
               </div>
 
-              {/* Category Name */}
-              <h3 className="mt-6  text-lg font-medium tracking-wide capitalize">
-                {cat.name}
-              </h3>
-            </Link>
-          ))}
-        </div>
+              {/* Slider */}
+              <Swiper
+                modules={[Navigation]}
+                navigation
+                spaceBetween={20}
+                breakpoints={{
+                  0: { slidesPerView: 1.2 },
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                  1280: { slidesPerView: 4 },
+                }}
+              >
+                {products.map((product) => (
+                  <SwiperSlide key={product._id}>
+                    <div className="block group">
+
+                      <div className="relative aspect-square overflow-hidden rounded-2xl">
+                        <Image
+                          src={product.image?.url}
+                          alt={product.title}
+                          fill
+                          className="object-cover group-hover:scale-110 transition duration-500"
+                        />
+                      </div>
+
+                      <h3 className="mt-3 text-sm font-medium">
+                        {product.title}
+                      </h3>
+
+                      <p className="text-sm text-gray-500">
+                        ₹{product.price}
+                      </p>
+
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+            </div>
+          );
+        })}
       </div>
     </section>
   );

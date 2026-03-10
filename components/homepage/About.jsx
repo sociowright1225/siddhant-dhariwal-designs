@@ -13,26 +13,32 @@ import "swiper/css/pagination";
 const categories = [
   {
     title: "Wall Decor",
+    slug: "wall-decor",
     img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163877/products/z0tf1qgjly5i85rrafsr.jpg",
   },
   {
     title: "Pendent Light",
+    slug: "pendent-light",
     img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163107/products/puwlh4vn2hhnfhtcs2sb.jpg",
   },
   {
     title: "Table Lamp",
+    slug: "table-lamp",
     img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773162945/products/o2mhjbzetghoro8kg67l.jpg",
   },
   {
     title: "Chandelier",
+    slug: "chandelier",
     img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163613/products/s0w6bqgg2pdptlsu9ql6.png",
   },
   {
     title: "Floor Light",
+    slug: "floor-light",
     img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1771137487/products/awknls8ljcdwopq2fyhf.jpg",
   },
   {
     title: "Home Decor",
+    slug: "home-decor",
     img: "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163676/products/g5qh0wpb6o003vaidwo9.png",
   },
 ];
@@ -84,7 +90,7 @@ export default function CategorySection() {
         >
           {categories.map((item, index) => (
             <SwiperSlide key={index}>
-              <div className="relative group cursor-pointer overflow-hidden rounded-sm">
+              <a href={`/products#${item.slug}`} className="relative group cursor-pointer overflow-hidden rounded-sm">
                 <div className="relative aspect-[3/4] w-full border  border-gray-100">
                   <Image
                     src={item.img}
@@ -100,7 +106,7 @@ export default function CategorySection() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </a>
             </SwiperSlide>
           ))}
         </Swiper>
