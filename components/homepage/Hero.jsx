@@ -10,19 +10,21 @@ import hero2 from "@/public/homepage/hero2.jpeg";
 import hero3 from "@/public/homepage/hero3.jpeg";
 
 const images = [
-  hero1,
-  hero2,
-  hero3,
-  hero1,
-  hero2,
-  hero3,
-  hero1,
-  hero2,
-  hero3,
-  hero1,
-  hero2,
-  hero3,
-  hero3,
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163877/products/z0tf1qgjly5i85rrafsr.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163107/products/puwlh4vn2hhnfhtcs2sb.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773162945/products/o2mhjbzetghoro8kg67l.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163613/products/s0w6bqgg2pdptlsu9ql6.png",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1771137487/products/awknls8ljcdwopq2fyhf.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163676/products/g5qh0wpb6o003vaidwo9.png",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773240993/0H5A2620-HDR_rva2vd.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773241200/0H5A2494-HDR_lwetvv.jpg",
+
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773162945/products/o2mhjbzetghoro8kg67l.jpg",
+    "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163877/products/z0tf1qgjly5i85rrafsr.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244092/0H5A2089-HDR_sfq7bl.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244182/DSC09184_cjah1s.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244283/4E7B228E-4C08-4734-842A-FF0064DB1FED_oicsqh.jpg",
+  
 ];
 
 export default function HeroCarousel() {
@@ -128,7 +130,10 @@ export default function HeroCarousel() {
 
       {/* ================= CTA ================= */}
       <div className="pb-20 flex flex-col items-center gap-4 z-10">
-        <a href="/products" className="bg-black hover:bg-white text-white hover:text-black hover:border-b px-10 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:scale-105 active:scale-95">
+        <a
+          href="/products"
+          className="bg-black hover:bg-white text-white hover:text-black hover:border-b px-10 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:scale-105 active:scale-95"
+        >
           Explore Our World
         </a>
       </div>
