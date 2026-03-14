@@ -11,17 +11,17 @@ export default function Footer() {
      <div className="w-30 h-30">
        <Image src={logo} alt="" width={1000} height={1000}/>
      </div>
-          <p className="text-sm leading-relaxed text-gray-400">
+          {/* <p className="text-sm leading-relaxed text-gray-400">
             Lorem ipsum is simply dummy text of the printing and typesetting industry.
-          </p>
+          </p> */}
 
           {/* Social icons */}
-          <div className="flex gap-4 mt-5">
+          {/* <div className="flex gap-4 mt-5">
             <span className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-[#1e3a32]">in</span>
             <span className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-[#1e3a32]">X</span>
             <span className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-[#1e3a32]">ig</span>
             <span className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:bg-[#1e3a32]">yt</span>
-          </div>
+          </div> */}
         </div>
 
         {/* Company */}
