@@ -8,7 +8,7 @@ export default function Contact() {
         {/* LEFT INFO CARD */}
         <div className="bg-[#f3f1ec] rounded-xl p-8 lg:p-10">
           <h2 className="text-3xl font-semibold mb-4">
-            Get in Touch with Hatsu
+            Get in Touch with <br /> Siddhant Dhariwal Designs
           </h2>
 
           <p className="text-sm text-gray-600 mb-6 leading-relaxed">
@@ -19,23 +19,23 @@ export default function Contact() {
 
           <div className="mb-6">
             <h4 className="font-medium mb-1">Reach us on email:</h4>
-            <p className="text-sm text-gray-700">hello@hatsu.in</p>
+            <p className="text-sm text-gray-700">letsdesignsid23@gmail.com</p>
           </div>
 
           <div>
             <h4 className="font-medium mb-2">Phone:</h4>
 
             <p className="text-sm text-gray-700 mb-1">
-              Mumbai: +91 72081 17427 | +91 77100 57671
+              Mumbai: +91 8128202359
             </p>
 
-            <p className="text-sm text-gray-700 mb-1">
+            {/* <p className="text-sm text-gray-700 mb-1">
               Bangalore: +91 72089 71366
             </p>
 
             <p className="text-sm text-gray-700">
               Gurgaon: +91 77382 49492
-            </p>
+            </p> */}
           </div>
         </div>
 

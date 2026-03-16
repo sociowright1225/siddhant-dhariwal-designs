@@ -81,7 +81,8 @@ export default function ProjectsScrollSection() {
         </p>
       </div>
 
-      <div className="cursor-grab active:cursor-grabbing">
+     <div className=" flex justify-center items-center">
+       <div className="cursor-grab active:cursor-grabbing">
         {/* TOP ROW */}
         <motion.div
           style={{ x: xTop }}
@@ -106,6 +107,7 @@ export default function ProjectsScrollSection() {
           ))}
         </motion.div>
       </div>
+     </div>
 
       <div className="flex justify-center mt-16 px-6">
         <a
