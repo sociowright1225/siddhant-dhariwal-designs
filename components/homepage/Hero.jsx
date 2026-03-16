@@ -93,8 +93,7 @@ export default function HeroCarousel() {
         <p className="mt-6 text-gray-600 max-w-xl mx-auto text-lg max-lg:text-base leading-relaxed">
           We craft bespoke lighting experiences that transform spaces into
           stories. Explore our world of handcrafted luminaires, sculptural
-          pendants, and statement lighting — designed for those who refuse to
-          settle for ordinary.
+          pendants, and statement lighting.
         </p>
       </div>
 
