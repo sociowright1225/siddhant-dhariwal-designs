@@ -86,7 +86,7 @@ export default function HeroCarousel() {
     <div className="relative pt-28 bg-[#F9F7F2] min-h-screen flex flex-col items-center justify-start overflow-hidden font-sans">
       {/* ================= Heading ================= */}
       <div className="text-center font-serif z-10 px-4">
-        <h1 className="text-5xl text-[#1a1a1a] tracking-tight leading-tight">
+        <h1 className="text-5xl max-lg:text-4xl text-[#1a1a1a] tracking-tight leading-tight">
           Where Light Becomes Art
         </h1>
 
