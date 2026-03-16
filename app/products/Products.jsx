@@ -2,122 +2,76 @@
 
 import api from "@/lib/api";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
-
 export default function CategoryList() {
-  const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCategories = async () => {
       try {
         const { data } = await api.get("/products");
-
-        const grouped = {};
-
+        
+        // Products se unique categories extract karna aur unka ek representative image lena
+        const uniqueCategories = {};
         data.forEach((product) => {
-          const category = product.category?.trim();
-
-          if (!grouped[category]) {
-            grouped[category] = [];
+          const catName = product.category?.trim() || "Uncategorized";
+          if (!uniqueCategories[catName]) {
+            uniqueCategories[catName] = {
+              name: catName,
+              image: product.image?.url, // Pehle product ki image category cover ban jayegi
+              slug: catName.toLowerCase().replace(/\s+/g, "-"),
+            };
           }
-
-          grouped[category].push(product);
         });
 
-        setCategories(grouped);
+        setCategories(Object.values(uniqueCategories));
         setLoading(false);
       } catch (err) {
         console.error(err);
+        setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchCategories();
   }, []);
 
-  // 🔥 Scroll after products load
-  useEffect(() => {
-    if (!loading) {
-      const hash = window.location.hash;
-
-      if (hash) {
-        const element = document.querySelector(hash);
-
-        if (element) {
-          setTimeout(() => {
-            element.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }, 200);
-        }
-      }
-    }
-  }, [loading]);
+  if (loading) return <div className="py-20 text-center font-medium">Loading Categories...</div>;
 
   return (
     <section className="py-16 px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
-        {Object.entries(categories).map(([category, products]) => {
-          const slug = category.toLowerCase().replace(/\s+/g, "-");
-
-          return (
-            <div key={category} id={slug}>
-              
-              {/* Category Title */}
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-semibold capitalize">
-                  {category}
-                </h2>
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold mb-10 text-center">Shop by Category</h2>
+        
+        {/* Category Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {categories.map((category) => (
+            <Link 
+              key={category.slug} 
+              href={`/products/${category.slug}`} 
+              className="group"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-gray-100">
+                {category.image && (
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition duration-500"
+                  />
+                )}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <h3 className="text-white text-xl font-bold capitalize px-4 text-center">
+                    {category.name}
+                  </h3>
+                </div>
               </div>
-
-              {/* Slider */}
-              <Swiper
-                modules={[Navigation]}
-                navigation
-                spaceBetween={20}
-                breakpoints={{
-                  0: { slidesPerView: 1.2 },
-                  640: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1280: { slidesPerView: 4 },
-                }}
-              >
-                {products.map((product) => (
-                  <SwiperSlide key={product._id}>
-                    <div className="group">
-
-                      <div className="relative aspect-square overflow-hidden rounded-2xl">
-                        <Image
-                          src={product.image?.url}
-                          alt={product.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition duration-500"
-                        />
-                      </div>
-
-                      <h3 className="mt-3 text-sm font-medium">
-                        {product.title}
-                      </h3>
-
-                      <p className="text-sm text-gray-500">
-                        ₹{product.price}
-                      </p>
-
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-
-            </div>
-          );
-        })}
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
