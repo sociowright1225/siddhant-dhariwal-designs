@@ -86,11 +86,11 @@ export default function HeroCarousel() {
     <div className="relative pt-28 bg-[#F9F7F2] min-h-screen flex flex-col items-center justify-start overflow-hidden font-sans">
       {/* ================= Heading ================= */}
       <div className="text-center font-serif z-10 px-4">
-        <h1 className="text-5xl max-lg:text-4xl text-[#1a1a1a] tracking-tight leading-tight">
+        <h1 className="text-5xl text-[#1a1a1a] tracking-tight leading-tight">
           Where Light Becomes Art
         </h1>
 
-        <p className="mt-6 text-gray-600 max-w-xl mx-auto text-lg max-lg:text-base leading-relaxed">
+        <p className="mt-6 text-gray-600 max-w-xl mx-auto text-lg max-lg:text-sm leading-relaxed">
           We craft bespoke lighting experiences that transform spaces into
           stories. Explore our world of handcrafted luminaires, sculptural
           pendants, and statement lighting — designed for those who refuse to
