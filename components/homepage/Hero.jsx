@@ -20,11 +20,10 @@ const images = [
   "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773241200/0H5A2494-HDR_lwetvv.jpg",
 
   "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773162945/products/o2mhjbzetghoro8kg67l.jpg",
-    "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163877/products/z0tf1qgjly5i85rrafsr.jpg",
+  "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773939888/Copy_of_IMG_1133_th6vjo.jpg",
   "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244092/0H5A2089-HDR_sfq7bl.jpg",
   "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244182/DSC09184_cjah1s.jpg",
   "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244283/4E7B228E-4C08-4734-842A-FF0064DB1FED_oicsqh.jpg",
-  
 ];
 
 export default function HeroCarousel() {
