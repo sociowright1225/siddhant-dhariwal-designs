@@ -45,7 +45,7 @@ export default function ProjectDetail() {
       {/* 1. Header & Breadcrumb */}
       <header className="max-w-7xl mx-auto px-6 pt-12">
         <nav className="text-[10px] text-gray-400 uppercase tracking-widest mb-6">
-          Home / Portfolio / {project.title}
+          Home / Projects / {project.title}
         </nav>
         <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-10">
           {project.title} 
