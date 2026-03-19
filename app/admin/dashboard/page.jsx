@@ -15,6 +15,7 @@ import {
   ArrowUpDown,
   LayoutDashboard,
   Briefcase,
+  Images, // New Icon
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -34,16 +35,17 @@ export default function AdminDashboard() {
     description: "",
     status: "published",
     image: null,
+    gallery: [], // Multiple images storage
   };
 
   const [form, setForm] = useState(initialForm);
   const [preview, setPreview] = useState(null);
+  const [galleryPreviews, setGalleryPreviews] = useState([]); // Multiple previews
 
   // --- LOAD DATA BASED ON TAB ---
   const loadData = async () => {
     try {
       setFetching(true);
-      // Switches endpoint based on active tab
       const endpoint = activeTab === "products" ? "/products" : "/projects";
       const { data } = await api.get(endpoint);
       setItems(data);
@@ -57,7 +59,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     loadData();
-    resetForm(); // Tab change hone par form reset ho jaye
+    resetForm(); 
   }, [activeTab]);
 
   // Unique categories for filtering
@@ -87,11 +89,20 @@ export default function AdminDashboard() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+    
     if (name === "image" && files && files[0]) {
+      // Single Image Logic
       const file = files[0];
       setForm({ ...form, image: file });
       if (preview && preview.startsWith("blob:")) URL.revokeObjectURL(preview);
       setPreview(URL.createObjectURL(file));
+    } else if (name === "gallery" && files) {
+      // Multiple Gallery Logic
+      const fileArray = Array.from(files);
+      setForm(prev => ({ ...prev, gallery: [...prev.gallery, ...fileArray] }));
+      
+      const newPreviews = fileArray.map(file => URL.createObjectURL(file));
+      setGalleryPreviews(prev => [...prev, ...newPreviews]);
     } else {
       setForm({ ...form, [name]: value });
     }
@@ -106,14 +117,32 @@ export default function AdminDashboard() {
       description: item.description || "",
       status: item.status || "published",
       image: null,
+      gallery: [], // We'll handle existing gallery separately or clear for new uploads
     });
     setPreview(item.image?.url || null);
+    
+    // Show existing gallery images as previews
+    if (item.gallery && Array.isArray(item.gallery)) {
+        setGalleryPreviews(item.gallery.map(img => typeof img === 'string' ? img : img.url));
+    } else {
+        setGalleryPreviews([]);
+    }
   };
 
   const resetForm = () => {
     setForm(initialForm);
     if (preview && preview.startsWith("blob:")) URL.revokeObjectURL(preview);
+    galleryPreviews.forEach(p => { if(p.startsWith("blob:")) URL.revokeObjectURL(p) });
     setPreview(null);
+    setGalleryPreviews([]);
+  };
+
+  const removeGalleryImage = (index) => {
+    setForm(prev => ({
+        ...prev,
+        gallery: prev.gallery.filter((_, i) => i !== index)
+    }));
+    setGalleryPreviews(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -123,13 +152,25 @@ export default function AdminDashboard() {
 
     try {
       const formData = new FormData();
-      Object.keys(form).forEach((key) => {
-        if (key === "image" && form[key] instanceof File) {
-          formData.append("image", form[key]);
-        } else if (form[key] !== null) {
-          formData.append(key, form[key]);
-        }
-      });
+      
+      // Append normal fields
+      formData.append("title", form.title);
+      formData.append("category", form.category);
+      formData.append("description", form.description);
+      formData.append("status", form.status);
+      if (activeTab === "products") formData.append("price", form.price);
+
+      // Main Image
+      if (form.image instanceof File) {
+        formData.append("image", form.image);
+      }
+
+      // Multiple Gallery Images
+      if (activeTab === "projects" && form.gallery.length > 0) {
+        form.gallery.forEach((file) => {
+          formData.append("gallery", file);
+        });
+      }
 
       if (form._id) {
         await api.put(`${endpoint}/${form._id}`, formData);
@@ -405,13 +446,14 @@ export default function AdminDashboard() {
                     />
                   </div>
 
+                  {/* FEATURED IMAGE */}
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
                       Featured Image
                     </label>
-                    <div className="relative group border-2 border-dashed border-gray-200 rounded-2xl p-4 hover:border-indigo-400 transition-all cursor-pointer bg-slate-50 flex items-center justify-center min-h-[160px]">
+                    <div className="relative group border-2 border-dashed border-gray-200 rounded-2xl p-4 hover:border-indigo-400 transition-all cursor-pointer bg-slate-50 flex items-center justify-center min-h-[120px]">
                       {preview ? (
-                        <div className="relative w-full h-32">
+                        <div className="relative w-full h-24">
                           <img
                             src={preview}
                             alt="Preview"
@@ -431,12 +473,8 @@ export default function AdminDashboard() {
                         </div>
                       ) : (
                         <div className="text-center">
-                          <div className="bg-white p-3 rounded-full shadow-sm inline-block mb-2 text-slate-400 group-hover:text-indigo-500 transition-colors">
-                            <ImageIcon size={24} />
-                          </div>
-                          <p className="text-[11px] text-slate-500 font-medium">
-                            Click to upload or drag & drop
-                          </p>
+                          <ImageIcon size={20} className="mx-auto text-slate-400 mb-1" />
+                          <p className="text-[10px] text-slate-500 font-medium">Main Image</p>
                         </div>
                       )}
                       <input
@@ -448,6 +486,41 @@ export default function AdminDashboard() {
                       />
                     </div>
                   </div>
+
+                  {/* GALLERY MULTIPLE IMAGES (Only for Projects) */}
+                  {activeTab === "projects" && (
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                        Project Gallery (Multiple)
+                      </label>
+                      <div className="grid grid-cols-4 gap-2">
+                        {galleryPreviews.map((src, idx) => (
+                          <div key={idx} className="relative aspect-square rounded-lg overflow-hidden border bg-white group">
+                            <img src={src} className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => removeGalleryImage(idx)}
+                              className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all"
+                            >
+                              <Trash2 size={12} />
+                            </button>
+                          </div>
+                        ))}
+                        <label className="aspect-square border-2 border-dashed border-gray-200 rounded-lg flex flex-col items-center justify-center text-slate-400 hover:border-indigo-400 hover:text-indigo-500 cursor-pointer transition-all">
+                          <Plus size={16} />
+                          <span className="text-[9px] font-bold mt-1">ADD</span>
+                          <input
+                            type="file"
+                            name="gallery"
+                            multiple
+                            className="hidden"
+                            accept="image/*"
+                            onChange={handleChange}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  )}
 
                   <button
                     disabled={loading}

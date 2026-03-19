@@ -22,49 +22,47 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
-  // Category ko URL friendly banane ke liye
   const createSlug = (text) => {
-    return text.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+    if (!text) return "";
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   };
 
-  if (loading) return <div className="text-center py-24 text-gray-500">Loading Projects...</div>;
+  if (loading) return <div className="text-center py-24 text-gray-500 tracking-widest uppercase">Loading Projects...</div>;
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-24 space-y-32">
-      {projects.map((project, index) => {
-        const categorySlug = createSlug(project.category);
-        const isReverse = index % 2 !== 0;
+    <section className="max-w-7xl mx-auto px-6 py-24">
+      <div className="grid md:grid-cols-3 gap-12">
+        {projects.map((project) => {
+          const projectSlug = createSlug(project.title);
 
-        return (
-          <div key={project._id} className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className={`${isReverse ? "lg:order-2" : "lg:order-1"}`}>
-              <span className="text-sm text-gray-400 uppercase tracking-widest">{project.category}</span>
-              <h2 className="text-3xl md:text-4xl font-semibold mt-3">{project.title}</h2>
-              <p className="text-gray-600 mt-4">{project.description}</p>
-              
-              {/* Sirf Category Slug wala Link */}
-              <Link 
-                href={`/projects/${categorySlug}`} 
-                className="mt-6 inline-flex items-center gap-2 border border-black rounded-full px-6 py-2 text-sm hover:bg-black hover:text-white transition"
-              >
-                View {project.category} Category
+          return (
+            <div key={project._id} className="group">
+              <Link href={`/projects/${projectSlug}`}>
+                {/* Image Container */}
+                <div className="overflow-hidden rounded-2xl shadow-lg bg-gray-100">
+                  <Image
+                    src={project.image.url}
+                    alt={project.title}
+                    width={800}
+                    height={600}
+                    className="object-cover w-full aspect-square group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                  />
+                </div>
+                
+                {/* Title Only */}
+                <h2 className="text-2xl font-bold mt-6 uppercase tracking-tight group-hover:text-gray-600 transition-colors">
+                  {project.title}
+                </h2>
               </Link>
             </div>
-
-            <div className={`${isReverse ? "lg:order-1" : "lg:order-2"}`}>
-              <Link href={`/projects/${categorySlug}`}>
-                <Image
-                  src={project.image.url}
-                  alt={project.title}
-                  width={800}
-                  height={500}
-                  className="rounded-xl object-cover w-full h-[400px]"
-                />
-              </Link>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </section>
   );
 }

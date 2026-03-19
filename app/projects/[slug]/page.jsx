@@ -1,65 +1,106 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
+import { useParams } from "next/navigation";
 
-export default function CategoryProjects() {
-  const { slug } = useParams(); // URL se category slug nikalne ke liye
-  const [projects, setProjects] = useState([]);
+export default function ProjectDetail() {
+  const { slug } = useParams();
+  const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Slug banane ka function (Wahi logic jo projects page par hai)
+  const createSlug = (text) => {
+    if (!text) return "";
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  };
+
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchProjectData = async () => {
       try {
         const response = await fetch("https://siddhant-dhariwal-designs-e6u4.vercel.app/api/projects");
         const data = await response.json();
         
-        // Slug se match karne ke liye helper function
-        const createSlug = (text) => text.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
-
-        // Filter logic: Sirf wahi projects dikhao jinka category slug matches the URL slug
-        const filtered = data.filter(p => createSlug(p.category) === slug);
-        setProjects(filtered);
+        // Title se match karke project find karein
+        const foundProject = data.find(p => createSlug(p.title) === slug);
+        setProject(foundProject);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error fetching project:", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchProjects();
+    fetchProjectData();
   }, [slug]);
 
-  if (loading) return <div className="text-center py-24 text-gray-500">Loading {slug} Projects...</div>;
-  if (projects.length === 0) return <div className="text-center py-24 text-gray-500">No projects found in this category.</div>;
+  if (loading) return <div className="text-center py-24 text-gray-400 tracking-widest uppercase">Loading Details...</div>;
+  if (!project) return <div className="text-center py-24 text-red-500">Project Not Found</div>;
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-24">
-      <Link href="/projects" className="text-sm text-gray-500 hover:underline">← All Categories</Link>
-      
-      <h1 className="text-4xl font-bold mt-6 capitalize mb-12">
-        {slug.replace(/-/g, " ")} Projects
-      </h1>
+    <main className="bg-[#F8F8F4] min-h-screen py-24">
+      {/* 1. Header & Breadcrumb */}
+      <header className="max-w-7xl mx-auto px-6 pt-12">
+        <nav className="text-[10px] text-gray-400 uppercase tracking-widest mb-6">
+          Home / Portfolio / {project.title}
+        </nav>
+        <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-10">
+          {project.title} 
+          {/* <span className="text-[#6B7F60] font-medium">{project.category}</span> */}
+        </h1>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project) => (
-          <div key={project._id} className="group border border-gray-400 rounded-2xl overflow-hidden p-4 bg-white shadow-sm">
-            <div className="relative h-64 w-full overflow-hidden rounded-xl">
-              <Image 
-                src={project.image.url} 
-                alt={project.title} 
-                fill
-                className="object-cover group-hover:scale-110 transition duration-500"
-              />
-            </div>
-            <div className="mt-4">
-              <h3 className="text-xl font-semibold">{project.title}</h3>
-              <p className="text-gray-500 text-sm mt-2 line-clamp-2">{project.description}</p>
-            </div>
+        {/* 2. Big Banner Image */}
+        <div className="relative w-full aspect-[21/9] md:aspect-[25/9] rounded-2xl overflow-hidden shadow-sm mb-10 bg-white flex items-center justify-center p-8">
+          <Image
+            src={project.image.url}
+            alt={project.title}
+            fill
+            className="object-cover" // Logo type feel ke liye contain use kiya hai
+            priority
+          />
+        </div>
+
+        {/* 3. Project Overview Section (As per Screenshot) */}
+        <div className=" gap-8 md:gap-16 mb-24">
+         
+          
+          <div className="md:col-span-6">
+            <p className="text-gray-600 leading-relaxed text-lg md:text-xl">
+              {project.description || `${project.title} redefines luxury in the 21st century. By offering high-end aesthetics and conscious consumerism, this project empowers the modern individual to choose brilliance without compromise.`}
+            </p>
           </div>
-        ))}
-      </div>
+
+       
+        </div>
+
+        {/* 4. Reels/Gallery Grid (Screenshot ke niche wale vertical mobile images) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+  {/* 1. Main Image (Ab ye grid ka pehla item ban jayega) */}
+  <div className="relative aspect-square md:aspect-[4/5] rounded-xl overflow-hidden shadow-lg group">
+    <Image 
+      src={project.image.url} 
+      fill 
+      className="object-cover group-hover:scale-105 transition-transform duration-700" 
+      alt="Main View" 
+    />
+  </div>
+  
+  {/* 2. Gallery Images */}
+  {project.gallery && project.gallery.map((item, idx) => (
+    <div key={idx} className="relative aspect-square md:aspect-[4/5] rounded-xl overflow-hidden shadow-lg group">
+      <Image
+        src={item.url}
+        fill
+        className="object-cover group-hover:scale-105 transition-transform duration-700"
+        alt={`Gallery View ${idx + 1}`}
+      />
+    </div>
+  ))}
+</div>
+      </header>
     </main>
   );
 }

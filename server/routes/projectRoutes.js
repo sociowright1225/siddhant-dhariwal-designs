@@ -9,25 +9,90 @@ const router = Router();
 /* ===========================
    CREATE PROJECT
 =========================== */
+/* ===========================
+   CREATE PROJECT (With Multiple Images)
+=========================== */
 router.post(
   "/",
-  upload.single("image"), // multer first
   protect,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "gallery", maxCount: 10 },
+  ]),
   async (req, res) => {
     try {
+      // Main Image Processing
+      const mainImage = req.files["image"] ? {
+        url: req.files["image"][0].path,
+        public_id: req.files["image"][0].filename,
+      } : null;
+
+      // Gallery Images Processing
+      const galleryImages = req.files["gallery"] 
+        ? req.files["gallery"].map(file => ({
+            url: file.path,
+            public_id: file.filename,
+          }))
+        : [];
+
       const project = await Project.create({
         title: req.body.title,
         description: req.body.description,
         category: req.body.category,
-        image: req.file
-          ? {
-              url: req.file.path,
-              public_id: req.file.filename,
-            }
-          : null,
+        image: mainImage,
+        gallery: galleryImages,
       });
 
       res.status(201).json(project);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+
+/* ===========================
+   UPDATE PROJECT
+=========================== */
+router.put(
+  "/:id",
+  protect,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "gallery", maxCount: 10 },
+  ]),
+  async (req, res) => {
+    try {
+      const project = await Project.findById(req.params.id);
+      if (!project) return res.status(404).json({ message: "Project not found" });
+
+      project.title = req.body.title ?? project.title;
+      project.description = req.body.description ?? project.description;
+      project.category = req.body.category ?? project.category;
+
+      // Update Main Image
+      if (req.files["image"]) {
+        if (project.image?.public_id) {
+          await cloudinary.uploader.destroy(project.image.public_id);
+        }
+        project.image = {
+          url: req.files["image"][0].path,
+          public_id: req.files["image"][0].filename,
+        };
+      }
+
+      // Update/Append Gallery
+      if (req.files["gallery"]) {
+        // Purani images delete karni hain ya sirf add? 
+        // Neeche wala code purani gallery images mein nayi add kar dega.
+        const newGalleryPhotos = req.files["gallery"].map(file => ({
+          url: file.path,
+          public_id: file.filename,
+        }));
+        project.gallery.push(...newGalleryPhotos);
+      }
+
+      await project.save();
+      res.json(project);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -66,42 +131,42 @@ router.get("/:id", async (req, res) => {
 /* ===========================
    UPDATE PROJECT
 =========================== */
-router.put(
-  "/:id",
-  upload.single("image"),
-  protect,
-  async (req, res) => {
-    try {
-      const project = await Project.findById(req.params.id);
+// router.put(
+//   "/:id",
+//   upload.single("image"),
+//   protect,
+//   async (req, res) => {
+//     try {
+//       const project = await Project.findById(req.params.id);
 
-      if (!project) {
-        return res.status(404).json({ message: "Project not found" });
-      }
+//       if (!project) {
+//         return res.status(404).json({ message: "Project not found" });
+//       }
 
-      project.title = req.body.title ?? project.title;
-      project.description = req.body.description ?? project.description;
-      project.category = req.body.category ?? project.category;
+//       project.title = req.body.title ?? project.title;
+//       project.description = req.body.description ?? project.description;
+//       project.category = req.body.category ?? project.category;
 
-      if (req.file) {
-        // delete old image
-        if (project.image?.public_id) {
-          await cloudinary.uploader.destroy(project.image.public_id);
-        }
+//       if (req.file) {
+//         // delete old image
+//         if (project.image?.public_id) {
+//           await cloudinary.uploader.destroy(project.image.public_id);
+//         }
 
-        project.image = {
-          url: req.file.path,
-          public_id: req.file.filename,
-        };
-      }
+//         project.image = {
+//           url: req.file.path,
+//           public_id: req.file.filename,
+//         };
+//       }
 
-      await project.save();
+//       await project.save();
 
-      res.json(project);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-);
+//       res.json(project);
+//     } catch (error) {
+//       res.status(500).json({ message: error.message });
+//     }
+//   }
+// );
 
 /* ===========================
    DELETE PROJECT
