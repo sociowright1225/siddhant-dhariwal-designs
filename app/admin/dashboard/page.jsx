@@ -356,10 +356,13 @@ export default function AdminDashboard() {
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Category</label>
                       <select name="category" value={form.category} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-sm focus:border-indigo-500 outline-none appearance-none" required>
                         <option value="">Select...</option>
-                        <option value="Residential">Residential</option>
-                        <option value="Commercial">Commercial</option>
-                        <option value="Interior">Interior</option>
-                        <option value="Furniture">Furniture</option>
+                        <option value="Wall Decor">Wall Decor</option>
+                        <option value="Pendent Light">Pendent Light</option>
+                        <option value="Table Lamp">Table Lamp</option>
+                        <option value="Chandelier">Chandelier</option>
+                        <option value="Floor Light">Floor Light</option>
+                        <option value="Home Decor">Home Decor</option>
+                        
                       </select>
                     </div>
                     
