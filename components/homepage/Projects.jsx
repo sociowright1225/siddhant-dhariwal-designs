@@ -7,16 +7,14 @@ import { useRef, useEffect, useState } from "react";
 export default function ProjectsScrollSection() {
   const sectionRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState([]); // Removed TypeScript <any[]>
   const [loading, setLoading] = useState(true);
 
-  // 1. Fetch Data from your API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch("https://siddhant-dhariwal-designs-e6u4.vercel.app/api/products");
         const data = await response.json();
-        // The API returns an array directly based on your snippet
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -44,7 +42,6 @@ export default function ProjectsScrollSection() {
   const xTop = useTransform(scrollYProgress, [0, 1], moveRange);
   const xBottom = useTransform(scrollYProgress, [0, 1], moveRangeReverse);
 
-  // 2. Split products into two rows for the animation
   const half = Math.ceil(products.length / 2);
   const projectsTop = products.slice(0, half);
   const projectsBottom = products.slice(half);
@@ -55,7 +52,7 @@ export default function ProjectsScrollSection() {
     <section ref={sectionRef} className="py-16 md:py-24 overflow-hidden bg-white">
       <div className="max-w-7xl mx-auto px-6 mb-12">
         <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
-          Featured Collection
+          Projects
         </p>
         <h2 className="text-3xl md:text-5xl font-semibold max-w-2xl leading-tight">
           Spaces We Have Had the Honour to Transform
@@ -63,7 +60,7 @@ export default function ProjectsScrollSection() {
       </div>
 
       <div className="flex justify-center items-center">
-        <div className="cursor-grab active:cursor-grabbing">
+        <div className="cursor-grab active:cursor-grabbing w-full">
           {/* TOP ROW */}
           <motion.div
             style={{ x: xTop }}
@@ -101,15 +98,14 @@ export default function ProjectsScrollSection() {
           href="/projects"
           className="w-full sm:w-auto text-center bg-black text-white hover:bg-gray-800 transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium"
         >
-          View All Products
+          View All Projects
         </a>
       </div>
     </section>
   );
 }
 
-// 3. Updated Card to use API Props
-function ProjectCard({ img, title, category }: { img: string, title: string, category: string }) {
+function ProjectCard({ img, title, category }) {
   return (
     <div className="min-w-[260px] md:min-w-[400px] group select-none">
       <div className="relative h-48 md:h-72 rounded-2xl md:rounded-3xl overflow-hidden mb-4 pointer-events-none">
