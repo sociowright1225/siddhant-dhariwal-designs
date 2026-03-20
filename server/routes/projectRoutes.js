@@ -6,159 +6,118 @@ import cloudinary from "../config/cloudinary.js";
 
 const router = Router();
 
-/* ===========================
-   CREATE PROJECT
-=========================== */
-router.post(
-  "/",
-  protect,
-  upload.fields([
-    { name: "image", maxCount: 1 },
-    { name: "gallery", maxCount: 10 },
-  ]),
-  async (req, res) => {
-    try {
-      // DEBUG: Yahan check karein console mein kya dikh raha hai
-      console.log("--- DATA RECEIVED ---");
-      console.log("Body:", req.body); 
-      console.log("Files:", req.files ? "Found" : "Empty");
+/**
+ * CREATE PROJECT
+ * Handles Single Cover Image and Multiple Gallery Images/Videos
+ */
+router.post("/", protect, upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "gallery", maxCount: 15 },
+]), async (req, res) => {
+  try {
+    const mainImage = req.files?.["image"] ? {
+      url: req.files["image"][0].path,
+      public_id: req.files["image"][0].filename,
+    } : null;
 
-      // Validation check
-      if (!req.body.title) {
-        return res.status(400).json({ message: "Title is required" });
-      }
-
-      const mainImage = req.files?.["image"] ? {
-        url: req.files["image"][0].path,
-        public_id: req.files["image"][0].filename,
-      } : null;
-
-      const galleryImages = req.files?.["gallery"] 
-        ? req.files["gallery"].map(file => ({
-            url: file.path,
-            public_id: file.filename,
-          }))
-        : [];
-
-      const project = await Project.create({
-        title: req.body.title,
-        description: req.body.description,
-        category: req.body.category,
-        location: req.body.location || "Not Specified", // Default value for testing
-        date: req.body.date ? new Date(req.body.date) : null,
-        image: mainImage,
-        gallery: galleryImages,
-      });
-
-      console.log("Project Created Successfully:", project._id);
-      res.status(201).json(project);
-    } catch (error) {
-      console.error("CRITICAL SAVE ERROR:", error);
-      res.status(500).json({ message: error.message });
-    }
-  }
-);
-
-/* ===========================
-   UPDATE PROJECT
-=========================== */
-router.put(
-  "/:id",
-  protect,
-  upload.fields([
-    { name: "image", maxCount: 1 },
-    { name: "gallery", maxCount: 10 },
-  ]),
-  async (req, res) => {
-    try {
-      const project = await Project.findById(req.params.id);
-      if (!project) return res.status(404).json({ message: "Project not found" });
-
-      // Fields update logic
-      project.title = req.body.title ?? project.title;
-      project.description = req.body.description ?? project.description;
-      project.category = req.body.category ?? project.category;
-      project.location = req.body.location ?? project.location; // Update logic add kiya
-      project.date = req.body.date ?? project.date;             // Update logic add kiya
-
-      // Update Main Image
-      if (req.files["image"]) {
-        if (project.image?.public_id) {
-          await cloudinary.uploader.destroy(project.image.public_id);
-        }
-        project.image = {
-          url: req.files["image"][0].path,
-          public_id: req.files["image"][0].filename,
-        };
-      }
-
-      // Update/Append Gallery
-      if (req.files["gallery"]) {
-        const newGalleryPhotos = req.files["gallery"].map(file => ({
+    const galleryFiles = req.files?.["gallery"] 
+      ? req.files["gallery"].map(file => ({
           url: file.path,
           public_id: file.filename,
-        }));
-        project.gallery.push(...newGalleryPhotos);
-      }
+        }))
+      : [];
 
-      await project.save();
-      res.json(project);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-);
+    const project = await Project.create({
+      ...req.body, // spread title, description, category, location, date
+      image: mainImage,
+      gallery: galleryFiles,
+    });
 
-// ... Baaki GET aur DELETE routes same rahenge ...
-/* ===========================
-   GET ALL PROJECTS
-=========================== */
-router.get("/", async (req, res) => {
-  try {
-    const projects = await Project.find().sort({ createdAt: -1 });
-    res.json(projects);
+    res.status(201).json(project);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-/* ===========================
-   GET PROJECT BY ID
-=========================== */
-router.get("/:id", async (req, res) => {
+/**
+ * UPDATE PROJECT
+ * Replaces cover image if new one provided; Appends to gallery if new files provided
+ */
+router.put("/:id", protect, upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "gallery", maxCount: 15 },
+]), async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ message: "Project not found" });
+
+    // Update basic fields
+    const fieldsToUpdate = ["title", "description", "category", "location", "date"];
+    fieldsToUpdate.forEach(field => {
+      if (req.body[field] !== undefined) project[field] = req.body[field];
+    });
+
+    // Update Cover Image
+    if (req.files && req.files["image"]) {
+      // Delete old cover from Cloudinary
+      if (project.image?.public_id) {
+        await cloudinary.uploader.destroy(project.image.public_id);
+      }
+      project.image = {
+        url: req.files["image"][0].path,
+        public_id: req.files["image"][0].filename,
+      };
+    }
+
+    // Append New Gallery Items
+    if (req.files && req.files["gallery"]) {
+      const newFiles = req.files["gallery"].map(file => ({
+        url: file.path,
+        public_id: file.filename,
+      }));
+      project.gallery.push(...newFiles);
+    }
+
+    await project.save();
     res.json(project);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-/* ===========================
-   DELETE PROJECT
-=========================== */
+/**
+ * DELETE PROJECT
+ * Full cleanup from Cloudinary
+ */
 router.delete("/:id", protect, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ message: "Project not found" });
 
+    // 1. Delete Main Image
     if (project.image?.public_id) {
       await cloudinary.uploader.destroy(project.image.public_id);
     }
 
-    // Gallery images delete karne ke liye (Optional but recommended)
-    if (project.gallery.length > 0) {
-        for (const photo of project.gallery) {
-            await cloudinary.uploader.destroy(photo.public_id);
-        }
+    // 2. Delete Gallery Items (Loop handles images & videos automatically)
+    if (project.gallery?.length > 0) {
+      const deletePromises = project.gallery.map(file => 
+        cloudinary.uploader.destroy(file.public_id, { resource_type: file.url.match(/\.(mp4|webm|mov)$/) ? 'video' : 'image' })
+      );
+      await Promise.all(deletePromises);
     }
 
     await project.deleteOne();
-    res.json({ message: "Project deleted successfully" });
+    res.json({ message: "Project and associated media deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+// GET routes remain standard...
+router.get("/", async (req, res) => {
+  const projects = await Project.find().sort({ createdAt: -1 });
+  res.json(projects);
 });
 
 export default router;
