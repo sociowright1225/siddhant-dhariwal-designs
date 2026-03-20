@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const WhatWeDo = () => {
   return (
     <section className="max-w-7xl mx-auto px-6 py-16 bg-white font-sans">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
         {/* Left Column: Process/Craft Image */}
         <div className="relative">
           <div className="overflow-hidden rounded-lg shadow-md aspect-square">
@@ -24,26 +23,26 @@ const WhatWeDo = () => {
 
           <div className="space-y-6 text-gray-600 leading-relaxed text-sm lg:text-base">
             <p className="font-medium text-gray-800">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod 
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-              veniam, quis nostrud exercitation ullamco laboris.
+              Siddhant Dhariwal is a design studio specializing in bespoke
+              lighting and collectible home objects, distinguished by its
+              sculptural approach and refined materiality.
             </p>
 
             <p>
-              The materials we choose are selected not only for their texture and durability, 
-              but also to uphold our commitment to sustainability and longevity. At the core 
-              of our practice lies a distinctive design language — an exploration of lines, 
-              intersections, and balance.
+              The studio’s signature lies in its masterful interplay of
+              materials—hand-blown glass, cast brass, alabaster, marble, wood,
+              ceramic, resin, and semi-precious stones. Each element is
+              carefully curated and composed, allowing contrasts—translucent and
+              opaque, raw and polished—to coexist in harmony. Every creation is
+              100% made in India, realized by generational artisans whose
+              expertise transforms raw materials into objects of precision and
+              beauty. This collaboration between designer and craftsman results
+              in pieces that are not only visually striking but inherently rare.
             </p>
 
-            <p>
-              Each piece is reimagined through our collections to invite a deeper 
-              appreciation of form and connection. We are fascinated by how diverse 
-              materials can interact, complement, and elevate one another in a shared space.
-            </p>
+           
           </div>
         </div>
-        
       </div>
     </section>
   );

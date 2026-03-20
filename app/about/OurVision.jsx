@@ -13,14 +13,14 @@ const WhatWeDo = () => {
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed text-base lg:text-lg">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-              </p>
-              <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit.
+              At the heart of the studio lies an uncompromising belief: true design begins with
+fascination.Each piece emerges from a continuous search—for forms, materials,
+and ideas that evoke emotion and intrigue. The process is instinctive yet
+deliberate, resulting in objects that transcend utility and enter the realm of
+collectible design.Indian craftsmanship forms the soul of this exploration.
+Traditional techniques and regional artistry are not merely referenced—they are
+reinterpreted, refined, and elevated into contemporary expressions that resonate
+globally.
               </p>
             </div>
           </div>
