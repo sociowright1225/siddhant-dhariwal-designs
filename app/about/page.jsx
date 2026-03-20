@@ -16,7 +16,7 @@ export default function page() {
       <MeetOurFounder/>
       <OurVision/>
       <WhatWeDo/>
-      <WhatWeCreate/>
+      
       <CTA/>
     </div>
   )
