@@ -8,7 +8,7 @@ export default function Footer() {
 
         {/* Brand */}
         <div>
-     <div className="w-30 h-30 max+lg:w+15 max-lg:h-15">
+     <div className="w-30 h-30 max+lg:w-14 max-lg:h-14">
        <Image src={logo} alt="" width={1000} height={1000}/>
      </div>
           {/* <p className="text-sm leading-relaxed text-gray-400">
