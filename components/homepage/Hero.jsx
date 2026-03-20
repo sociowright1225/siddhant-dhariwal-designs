@@ -12,7 +12,17 @@ import hero3 from "@/public/homepage/hero3.jpeg";
 const images = [
 "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244283/4E7B228E-4C08-4734-842A-FF0064DB1FED_oicsqh.jpg",
 "https://res.cloudinary.com/dwdmczhsn/image/upload/v1773939888/Copy_of_IMG_1133_th6vjo.jpg",
-
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163750/products/zfoxigvpzvh6heqzx2lb.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163676/products/g5qh0wpb6o003vaidwo9.png",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163107/products/puwlh4vn2hhnfhtcs2sb.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773244182/DSC09184_cjah1s.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773975483/hero3_vn8dxi.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163312/products/v81ndwpsclplov4zsgom.png",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773975579/IMG_9864_vcnpul.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773163263/products/srv2rw1loljvwyl91yyj.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773975690/Screenshot_2026-03-20_081815_drb8ej.png",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773975725/WhatsApp_Image_2026-02-26_at_14.14.42_bjyx3e.jpg",
+"https://res.cloudinary.com/dwdmczhsn/image/upload/v1773241200/0H5A2494-HDR_lwetvv.jpg"
 ];
 
 export default function HeroCarousel() {
