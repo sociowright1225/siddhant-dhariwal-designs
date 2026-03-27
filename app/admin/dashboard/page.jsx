@@ -352,7 +352,7 @@ export default function AdminDashboard() {
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
+                    {/* <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Category</label>
                       <select name="category" value={form.category} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-sm focus:border-indigo-500 outline-none appearance-none" required>
                         <option value="">Select...</option>
@@ -364,7 +364,7 @@ export default function AdminDashboard() {
                         <option value="Home Decor">Home Decor</option>
                         
                       </select>
-                    </div>
+                    </div>*/}
                     
                     {activeTab === "products" ? (
                       <div className="space-y-1.5">
