@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
+// Swiper Styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -18,8 +19,18 @@ export default function Products() {
       try {
         const response = await fetch("https://siddhant-dhariwal-designs-e6u4.vercel.app/api/products");
         const data = await response.json();
-        // Assuming the API returns an array or an object with a products property
-        setProducts(Array.isArray(data) ? data : data.products || []);
+        
+        // Data extract karna
+        const allData = Array.isArray(data) ? data : data.products || [];
+
+        /* 
+           LATEST 10 PRODUCTS LOGIC:
+           1. .reverse() -> Taki naye products pehle aayein (agar API order purana hai)
+           2. .slice(0, 10) -> Sirf shuruat ke 10 items lene ke liye
+        */
+        const latestTen = [...allData].reverse().slice(0, 10);
+        
+        setProducts(latestTen);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -36,16 +47,17 @@ export default function Products() {
     <section className="py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-6">
         
+        {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div className="max-w-xl">
             <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">
-              Products
+              Latest Collection
             </p>
             <h2 className="text-3xl md:text-5xl font-semibold leading-tight mb-3">
               Lighting That Makes a Statement
             </h2>
             <p className="text-sm md:text-base text-gray-500">
-              Each piece in our collection is thoughtfully designed and meticulously crafted.
+              Showing our top 10 most recent designs, meticulously crafted for your space.
             </p>
           </div>
 
@@ -54,6 +66,7 @@ export default function Products() {
           </a>
         </div>
 
+        {/* Swiper Slider */}
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={20}
@@ -73,7 +86,7 @@ export default function Products() {
                 <div className="relative h-64 md:h-80 mb-6 overflow-hidden rounded-2xl">
                   <Image
                     src={item.image?.url || "/placeholder.jpg"} 
-                    alt={item.title}
+                    alt={item.title || "Product Image"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -91,6 +104,7 @@ export default function Products() {
           ))}
         </Swiper>
 
+        {/* Mobile View Button */}
         <div className="flex justify-center mt-4 md:hidden">
           <a href="/products" className="w-full text-center bg-black text-white py-4 rounded-full text-sm font-medium">
             View All Products
