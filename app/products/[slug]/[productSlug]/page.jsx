@@ -4,6 +4,8 @@ import api from "@/lib/api";
 import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Breadcrumbs from "@/components/breadcrumbs/Breadcrumbs";
+import { Mail, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function ProductDetailsPage({ params }) {
   const resolvedParams = use(params);
@@ -48,20 +50,26 @@ export default function ProductDetailsPage({ params }) {
              src={product.image.url} 
              alt={product.title} 
              fill 
-             className="object-contain p-8" 
+             className="object-contain " 
              priority 
           />
         </div>
-        <div>
+        <div className="">
           <h1 className="text-4xl font-extrabold mb-4">{product.title}</h1>
-          <p className="text-2xl text-amber-600 font-semibold mb-6">
+          <p className="text-2xl text-gray-400 font-semibold mb-6">
             {product.price ? `₹${product.price}` : "Price on Request"}
           </p>
-          <div className="prose prose-gray">
+           <p className="mb-4 text-sm text-gray-500">Category: {product.category}</p>
+          <div className="prose prose-gray mb-8">
              <h3 className="text-lg font-bold">Product Specifications:</h3>
              <p className="whitespace-pre-line text-gray-600">{product.description}</p>
           </div>
-          <p className="mt-4 text-sm text-gray-500">Category: {product.category}</p>
+         
+          <Link href={"/contact"} className=" border-2 border-gray-900 text-gray-900 hover:bg-gray-900
+           hover:text-white font-bold py-2 px-6 rounded-full gap-2 transition-all">
+              {/* <Mail size={20} /> */}
+              Contact Us
+            </Link>
         </div>
       </div>
     </div>
