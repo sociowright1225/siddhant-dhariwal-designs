@@ -114,26 +114,27 @@ export default function ProjectDetail() {
         <h3 className="text-[10px] uppercase tracking-[0.3em] text-gray-400 mb-8 font-bold">Project Gallery</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Main Image in Gallery */}
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-md group">
+          {/* <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-md group">
             <Image 
               src={project.image.url} 
               fill 
               className="object-cover group-hover:scale-105 transition-transform duration-1000" 
               alt="Hero View" 
             />
-          </div>
+          </div> */}
           
           {/* Gallery Images */}
-          {project.gallery && project.gallery.map((item, idx) => (
-            <div key={idx} className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-md group">
-              <Image
-                src={item.url}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-1000"
-                alt={`Perspective ${idx + 1}`}
-              />
-            </div>
-          ))}
+         {project?.gallery?.map((item, idx) => (
+  <div key={item.id || idx} className=" overflow-hidden group">
+    <Image
+      src={item.url}
+      width={item.width || 800} // Replace with original width
+      height={item.height || 600} // Replace with original height
+      alt={`Perspective ${idx + 1}`}
+      className="w-auto h-auto group-hover:scale-105 rounded-2xl transition-transform duration-1000"
+    />
+  </div>
+))}
         </div>
       </header>
     </main>

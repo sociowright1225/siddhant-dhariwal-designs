@@ -50,7 +50,7 @@ export default function Projects() {
                     alt={project.title}
                     width={800}
                     height={600}
-                    className="object-cover w-full group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                    className="object-cover w-full aspect-square group-hover:scale-105 transition-transform duration-700 ease-in-out"
                   />
                 </div>
                 

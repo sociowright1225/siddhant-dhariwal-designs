@@ -4,16 +4,18 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
+// ... imports
+
 export default function ProjectsScrollSection() {
   const sectionRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [products, setProducts] = useState([]); // Removed TypeScript <any[]>
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://siddhant-dhariwal-designs-e6u4.vercel.app/api/products");
+        const response = await fetch("https://siddhant-dhariwal-designs-e6u4.vercel.app/api/projects");
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -24,7 +26,6 @@ export default function ProjectsScrollSection() {
     };
 
     fetchProducts();
-
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -46,7 +47,7 @@ export default function ProjectsScrollSection() {
   const projectsTop = products.slice(0, half);
   const projectsBottom = products.slice(half);
 
-  if (loading) return <div className="py-24 text-center">Loading Gallery...</div>;
+  // REMOVED: if (loading) return ... (This was the cause)
 
   return (
     <section ref={sectionRef} className="py-16 md:py-24 overflow-hidden bg-white">
@@ -59,48 +60,54 @@ export default function ProjectsScrollSection() {
         </h2>
       </div>
 
-      <div className="flex justify-center items-center">
-        <div className="cursor-grab active:cursor-grabbing w-full">
-          {/* TOP ROW */}
-          <motion.div
-            style={{ x: xTop }}
-            className="flex gap-4 md:gap-8 mb-4 md:mb-8 whitespace-nowrap px-6"
-          >
-            {projectsTop.map((item) => (
-              <ProjectCard 
-                key={item._id} 
-                img={item.image.url} 
-                title={item.title} 
-                category={item.category}
-              />
-            ))}
-          </motion.div>
+      {loading ? (
+        <div className="py-24 text-center">Loading Gallery...</div>
+      ) : (
+        <div className="flex justify-center items-center">
+          <div className="cursor-grab active:cursor-grabbing w-full">
+            {/* TOP ROW */}
+            <motion.div
+              style={{ x: xTop }}
+              className="flex gap-4 md:gap-8 mb-4 md:mb-8 whitespace-nowrap px-6"
+            >
+              {projectsTop.map((item) => (
+                <ProjectCard 
+                  key={item._id} 
+                  img={item.image.url} 
+                  title={item.title} 
+                  category={item.category}
+                />
+              ))}
+            </motion.div>
 
-          {/* BOTTOM ROW */}
-          <motion.div
-            style={{ x: xBottom }}
-            className="flex gap-4 md:gap-8 whitespace-nowrap px-6"
-          >
-            {projectsBottom.map((item) => (
-              <ProjectCard 
-                key={item._id} 
-                img={item.image.url} 
-                title={item.title} 
-                category={item.category}
-              />
-            ))}
-          </motion.div>
+            {/* BOTTOM ROW */}
+            <motion.div
+              style={{ x: xBottom }}
+              className="flex gap-4 md:gap-8 whitespace-nowrap px-6"
+            >
+              {projectsBottom.map((item) => (
+                <ProjectCard 
+                  key={item._id} 
+                  img={item.image.url} 
+                  title={item.title} 
+                  category={item.category}
+                />
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="flex justify-center mt-16 px-6">
-        <a
-          href="/projects"
-          className="w-full sm:w-auto text-center bg-black text-white hover:bg-gray-800 transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium"
-        >
-          View All Projects
-        </a>
-      </div>
+      {!loading && (
+        <div className="flex justify-center mt-16 px-6">
+          <a
+            href="/projects"
+            className="w-full sm:w-auto text-center bg-black text-white hover:bg-gray-800 transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium"
+          >
+            View All Projects
+          </a>
+        </div>
+      )}
     </section>
   );
 }
