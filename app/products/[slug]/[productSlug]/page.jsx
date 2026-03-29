@@ -65,7 +65,7 @@ export default function ProductDetailsPage({ params }) {
              <p className="whitespace-pre-line text-gray-600">{product.description}</p>
           </div>
          
-          <Link href={"/contact"} className=" border-2 border-gray-900 text-gray-900 hover:bg-gray-900
+          <Link href={"/contact"} className=" border border-gray-900 text-gray-900 hover:bg-gray-900
            hover:text-white font-bold py-2 px-6 rounded-full gap-2 transition-all">
               {/* <Mail size={20} /> */}
               Contact Us

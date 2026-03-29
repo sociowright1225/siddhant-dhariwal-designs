@@ -46,7 +46,7 @@ export default function CategoryPage({ params }) {
               // IMPORTANT: Route structure matching folder (products/[slug]/[productSlug])
               <Link href={`/products/${slug}/${safeProductSlug}`} key={item._id}>
                 <div className="group cursor-pointer">
-                  <div className="relative w-full h-72 bg-gray-100 rounded-xl overflow-hidden">
+                  <div className="relative w-full aspect-4/5 bg-gray-100 rounded-xl overflow-hidden">
                     <Image
                       src={item.image.url}
                       alt={item.title}
