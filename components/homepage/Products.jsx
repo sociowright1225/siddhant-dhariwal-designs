@@ -97,7 +97,8 @@ export default function Products() {
                 </h3>
 
                 <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">
-                  {item.category} — ₹{item.price?.toLocaleString()}
+                  {item.category} 
+                  {/* — ₹{item.price?.toLocaleString()} */}
                 </p>
               </div>
             </SwiperSlide>
