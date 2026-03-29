@@ -39,12 +39,13 @@ export default function ProductDetailsPage({ params }) {
   if (!product) return <div className="text-center py-20">Product not found.</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
+    <div className=" ">
       <Breadcrumbs 
         title={product.title} 
         breadcrumbs={["Home", slug.replace(/-/g, " "), product.title]} 
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+    <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
         <div className="relative h-[500px] bg-gray-100 rounded-3xl overflow-hidden">
           <Image 
              src={product.image.url} 
@@ -72,6 +73,7 @@ export default function ProductDetailsPage({ params }) {
             </Link>
         </div>
       </div>
+    </div>
     </div>
   );
 }
