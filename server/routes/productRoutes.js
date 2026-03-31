@@ -2,35 +2,43 @@ import { Router } from "express";
 import Product from "../models/Product.js";
 import upload from "../middlewares/upload.js";
 import protect from "../middlewares/authMiddleware.js";
-import slugify from "../utils/slugify.js";
 import cloudinary from "../config/cloudinary.js";
 
 const router = Router();
 
 /* ===========================
-   CREATE PRODUCT
+   1. CREATE PRODUCT 
+   (Isse POST request handle hogi)
 =========================== */
 router.post(
   "/",
-  upload.single("image"), // ✅ multer FIRST
-  protect,                // ✅ auth AFTER
+  protect,
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "gallery", maxCount: 10 }
+  ]),
   async (req, res) => {
     try {
-      console.log("FILE:", req.file); // debug
+      const { title, description, price, category, status } = req.body;
+      
+      const mainImageFile = req.files['mainImage'] ? req.files['mainImage'][0] : null;
+      const galleryFiles = req.files['gallery'] || [];
 
       const product = await Product.create({
-        title: req.body.title,
-        slug: req.body.title,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        status: req.body.status,
-        image: req.file
-          ? {
-              url: req.file.path,
-              public_id: req.file.filename,
-            }
-          : null,
+        title,
+        slug: title.toLowerCase().split(' ').join('-'),
+        description,
+        price,
+        category,
+        status,
+        mainImage: mainImageFile ? {
+          url: mainImageFile.path,
+          public_id: mainImageFile.filename,
+        } : null,
+        gallery: galleryFiles.map(file => ({
+          url: file.path,
+          public_id: file.filename,
+        }))
       });
 
       res.status(201).json(product);
@@ -41,7 +49,7 @@ router.post(
 );
 
 /* ===========================
-   READ ALL PRODUCTS
+   2. READ ALL PRODUCTS
 =========================== */
 router.get("/", async (req, res) => {
   try {
@@ -53,57 +61,46 @@ router.get("/", async (req, res) => {
 });
 
 /* ===========================
-   READ PRODUCT BY SLUG
-=========================== */
-router.get("/slug/:slug", async (req, res) => {
-  try {
-    const product = await Product.findOne({ slug: req.params.slug })
-      .populate("category");
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-/* ===========================
-   UPDATE PRODUCT
+   3. UPDATE PRODUCT (Sahi Wala)
 =========================== */
 router.put(
   "/:id",
-  upload.single("image"), // ✅ multer FIRST
   protect,
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "gallery", maxCount: 10 }
+  ]),
   async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
-      if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-      }
+      if (!product) return res.status(404).json({ message: "Product not found" });
 
+      // Text Fields Update
       if (req.body.title) {
         product.title = req.body.title;
-        product.slug = req.body.title;
+        product.slug = req.body.title.toLowerCase().split(' ').join('-');
+      }
+      product.description = req.body.description || product.description;
+      product.price = req.body.price || product.price;
+      product.category = req.body.category || product.category;
+      product.status = req.body.status || product.status;
+
+      // Update Main Image
+      if (req.files && req.files['mainImage']) {
+        if (product.mainImage?.public_id) {
+          await cloudinary.uploader.destroy(product.mainImage.public_id);
+        }
+        const newMain = req.files['mainImage'][0];
+        product.mainImage = { url: newMain.path, public_id: newMain.filename };
       }
 
-      product.description = req.body.description ?? product.description;
-      product.price = req.body.price ?? product.price;
-      product.category = req.body.category ?? product.category;
-      product.status = req.body.status ?? product.status;
-
-      if (req.file) {
-        // delete old image
-        if (product.image?.public_id) {
-          await cloudinary.uploader.destroy(product.image.public_id);
-        }
-
-        product.image = {
-          url: req.file.path,
-          public_id: req.file.filename,
-        };
+      // Add to Gallery
+      if (req.files && req.files['gallery']) {
+        const newGallery = req.files['gallery'].map(file => ({
+          url: file.path,
+          public_id: file.filename
+        }));
+        product.gallery = [...product.gallery, ...newGallery];
       }
 
       await product.save();
@@ -115,17 +112,21 @@ router.put(
 );
 
 /* ===========================
-   DELETE PRODUCT
+   4. DELETE PRODUCT
 =========================== */
 router.delete("/:id", protect, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+    if (!product) return res.status(404).json({ message: "Product not found" });
 
-    if (product.image?.public_id) {
-      await cloudinary.uploader.destroy(product.image.public_id);
+    // Cloudinary se photos delete karein
+    if (product.mainImage?.public_id) {
+      await cloudinary.uploader.destroy(product.mainImage.public_id);
+    }
+    if (product.gallery?.length > 0) {
+      for (let img of product.gallery) {
+        await cloudinary.uploader.destroy(img.public_id);
+      }
     }
 
     await product.deleteOne();

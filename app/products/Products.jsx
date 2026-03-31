@@ -14,14 +14,14 @@ export default function CategoryList() {
       try {
         const { data } = await api.get("/products");
         
-        // Products se unique categories extract karna aur unka ek representative image lena
         const uniqueCategories = {};
         data.forEach((product) => {
           const catName = product.category?.trim() || "Uncategorized";
           if (!uniqueCategories[catName]) {
             uniqueCategories[catName] = {
               name: catName,
-              image: product.image?.url, // Pehle product ki image category cover ban jayegi
+              // UPDATE: product.image ki jagah product.mainImage use karein
+              image: product.mainImage?.url || product.image?.url, 
               slug: catName.toLowerCase().replace(/\s+/g, "-"),
             };
           }
@@ -44,8 +44,6 @@ export default function CategoryList() {
     <section className="py-16 px-6">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold mb-10 text-center">Shop by Category</h2>
-        
-        {/* Category Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {categories.map((category) => (
             <Link 
