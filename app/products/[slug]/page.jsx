@@ -100,13 +100,13 @@ export default function CategoryProductsPage() {
                   <h2 className="text-sm font-semibold text-slate-800 tracking-tight leading-tight uppercase truncate pr-4">
                     {product.title}
                   </h2>
-                  <span className="text-sm font-black text-slate-900">
+                  {/* <span className="text-sm font-black text-slate-900">
                     {product.price ? `₹${product.price.toLocaleString()}` : "P.O.R"}
-                  </span>
+                  </span> */}
                 </div>
-                <p className="text-xs text-slate-400 line-clamp-1 italic">
+                {/* <p className="text-xs text-slate-400 line-clamp-1 italic">
                   {product.description || "No description available"}
-                </p>
+                </p> */}
               </div>
             </Link>
           ))}

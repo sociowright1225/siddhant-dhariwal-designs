@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 lg:py-20">
+    <div className="max-w-7xl mx-auto px-6 py-12 lg:py-28">
       {/* Breadcrumbs */}
       <nav className="flex items-center space-x-3 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-12">
         <Link href="/" className="hover:text-black transition-colors">Home</Link>
