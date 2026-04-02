@@ -10,7 +10,7 @@ export default function CategoriesPage() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products/categories");
+        const res = await axios.get("https://siddhant-dhariwal-designs-e6u4.vercel/api/products/categories");
         setCategories(res.data);
       } catch (err) {
         console.error("Error:", err);

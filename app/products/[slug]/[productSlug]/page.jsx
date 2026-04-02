@@ -17,7 +17,7 @@ export default function ProductDetailPage() {
     const fetchProduct = async () => {
       if (!productSlug) return;
       try {
-        const res = await fetch(`http://localhost:5000/api/products/single/${productSlug}`);
+        const res = await fetch(`https://siddhant-dhariwal-designs-e6u4.vercel/api/products/single/${productSlug}`);
         const data = await res.json();
 
         if (data) {
