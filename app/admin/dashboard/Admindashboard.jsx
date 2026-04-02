@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("products");
 
   return (
-    <div className="flex min-h-screen bg-[#F1F5F9] text-slate-900 font-sans antialiased">
+    <div className="flex min-h-screen  text-slate-900 font-sans antialiased">
 
       {/* --- SIDEBAR --- */}
       <aside className="w-80 bg-white border-r border-slate-200 fixed h-full z-20 hidden lg:flex flex-col shadow-xl shadow-slate-200/50">

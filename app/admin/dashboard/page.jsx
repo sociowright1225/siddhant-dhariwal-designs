@@ -3,7 +3,7 @@ import AdminDashboard from './Admindashboard'
 
 export default function page() {
   return (
-    <div>
+    <div className='pt-[4rem]'>
       <AdminDashboard/>
     </div>
   )
