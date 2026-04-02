@@ -14,7 +14,7 @@ export default function CategoryProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`https://siddhant-dhariwal-designs-e6u4.vercel/api/products/category/${categoryName}`);
+        const res = await fetch(`https://siddhant-dhariwal-designs-e6u4.vercel.app/api/products/category/${categoryName}`);
         const data = await res.json();
         setProducts(data);
       } catch (error) {
