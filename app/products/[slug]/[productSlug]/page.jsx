@@ -1,112 +1,128 @@
 "use client";
 
-import api from "@/lib/api";
-import { useEffect, useState, use } from "react";
-import Image from "next/image";
-import Breadcrumbs from "@/components/breadcrumbs/Breadcrumbs";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 
-export default function ProductDetailsPage({ params }) {
-  const resolvedParams = use(params);
-  const { slug, productSlug } = resolvedParams; 
-
+export default function ProductDetailPage() {
+  const params = useParams();
+  
+  // Folder structure: products/[slug]/[productSlug]
+  const categorySlug = params.slug; 
+  const productSlug = params.productSlug; 
+  
   const [product, setProduct] = useState(null);
-  const [activeImage, setActiveImage] = useState(""); // Gallery click handle karne ke liye
   const [loading, setLoading] = useState(true);
+  const [activeImage, setActiveImage] = useState("");
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
+    const fetchProduct = async () => {
+      if (!productSlug) return;
       try {
-        const { data } = await api.get("/products");
+        // --- IMPORTANT: Backend ka sahi route use karein ---
+        // Agar aapka backend slug se data nikalne ke liye /single/:slug use karta hai to wahi likhein
+        const res = await fetch(`http://localhost:5000/api/products/single/${productSlug}`);
+        const data = await res.json();
         
-        const found = data.find(p => {
-          const itemSlug = p.slug.replace(/\s+/g, '-').toLowerCase();
-          return itemSlug === productSlug;
-        });
-        
-        if (found) {
-          setProduct(found);
-          // Default active image set karein
-          setActiveImage(found.mainImage?.url || found.image?.url);
+        if (data) {
+          setProduct(data);
+          // --- IMAGE FIX: Agar mainImage null hai to gallery ki pehli image uthao ---
+          const initialImage = data.mainImage?.url || (data.gallery && data.gallery.length > 0 ? data.gallery[0].url : "/placeholder.jpg");
+          setActiveImage(initialImage);
         }
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching product:", error);
-      } finally {
         setLoading(false);
       }
     };
-    fetchProductDetails();
+
+    fetchProduct();
   }, [productSlug]);
 
-  if (loading) return <div className="text-center py-20">Loading...</div>;
-  if (!product) return <div className="text-center py-20">Product not found.</div>;
+  if (loading) return <div className="h-screen flex items-center justify-center font-black text-2xl animate-pulse tracking-widest uppercase text-gray-400">Loading Designs...</div>;
+  
+  if (!product) return <div className="p-20 text-center text-red-500 font-bold">Product Not Found! (Slug: {productSlug})</div>;
 
   return (
-    <div>
-      <Breadcrumbs 
-        title={product.title} 
-        breadcrumbs={["Home", slug.replace(/-/g, " "), product.title]} 
-      />
-      
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+    <div className="max-w-7xl mx-auto p-4 md:p-10">
+      {/* Breadcrumbs */}
+      <nav className="flex space-x-2 text-xs font-bold uppercase tracking-widest text-gray-300 mb-10">
+        <Link href="/" className="hover:text-black transition-colors">Home</Link>
+        <span>/</span>
+        <Link href={`/products/${categorySlug}`} className="hover:text-black transition-colors">
+            {decodeURIComponent(categorySlug)}
+        </Link>
+        <span>/</span>
+        <span className="text-black font-extrabold">{product.title}</span>
+      </nav>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        {/* LEFT: IMAGES SECTION */}
+        <div className="space-y-6">
+          <div className="relative aspect-square rounded-[3rem] overflow-hidden bg-gray-100 border border-gray-100 shadow-2xl">
+            {/* Main Active Image */}
+            <img 
+              src={activeImage} 
+              alt={product.title} 
+              className="w-full h-full object-cover transition-opacity duration-500"
+              onError={(e) => { e.target.src = "/placeholder.jpg"; }} // Fallback agar URL corrupt ho
+            />
+          </div>
           
-          {/* LEFT: IMAGES SECTION */}
-          <div className="flex flex-col gap-4">
-            {/* Main Big Image */}
-            <div className="relative h-[500px] bg-gray-100 rounded-3xl overflow-hidden border border-gray-100">
-              <Image 
-                src={activeImage || "/placeholder.jpg"} 
-                alt={product.title} 
-                fill 
-                className="object-contain" 
-                priority 
-              />
-            </div>
-
-            {/* Gallery Thumbnails */}
-            {product.gallery && product.gallery.length > 0 && (
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-                {/* Pehla thumbnail hamesha Main Image hoga */}
-                <div 
-                  className={`relative min-w-[80px] h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition ${activeImage === product.mainImage?.url ? 'border-black' : 'border-transparent'}`}
-                  onClick={() => setActiveImage(product.mainImage?.url)}
+          {/* Gallery Thumbnails */}
+          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+            {/* Gallery array check */}
+            {product.gallery && product.gallery.length > 0 ? (
+              product.gallery.map((img, i) => (
+                <button 
+                  key={img._id || i} 
+                  onClick={() => setActiveImage(img.url)}
+                  className={`w-24 h-24 flex-shrink-0 rounded-[1.5rem] overflow-hidden border-2 transition-all duration-300 ${activeImage === img.url ? "border-black scale-95 shadow-lg" : "border-transparent opacity-50 hover:opacity-100"}`}
                 >
-                  <Image src={product.mainImage?.url} alt="Main" fill className="object-cover" />
-                </div>
-
-                {/* Baaki gallery items */}
-                {product.gallery.map((img, index) => (
-                  <div 
-                    key={img._id || index}
-                    className={`relative min-w-[80px] h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition ${activeImage === img.url ? 'border-black' : 'border-transparent'}`}
-                    onClick={() => setActiveImage(img.url)}
-                  >
-                    <Image src={img.url} alt={`Gallery ${index}`} fill className="object-cover" />
-                  </div>
-                ))}
-              </div>
+                  <img src={img.url} className="w-full h-full object-cover" alt={`Gallery ${i}`} />
+                </button>
+              ))
+            ) : (
+              <p className="text-xs text-gray-400 italic">No extra gallery images</p>
             )}
           </div>
+        </div>
 
-          {/* RIGHT: DETAILS SECTION */}
-          <div className="flex flex-col">
-            <h1 className="text-4xl font-extrabold mb-4">{product.title}</h1>
-            <p className="text-2xl text-gray-400 font-semibold mb-6">
-              {product.price ? `₹${product.price}` : "Price on Request"}
-            </p>
-            <p className="mb-4 text-sm text-gray-500 bg-gray-100 inline-block w-fit px-3 py-1 rounded-full">
-              Category: {product.category}
-            </p>
-            
-            <div className="prose prose-gray mb-8">
-               <h3 className="text-lg font-bold">Product Specifications:</h3>
-               <p className="whitespace-pre-line text-gray-600 mt-2">{product.description}</p>
+        {/* RIGHT: CONTENT SECTION */}
+        <div className="flex flex-col justify-center">
+          <div className="mb-6">
+             <span className="bg-black text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em]">
+                {product.category}
+             </span>
+          </div>
+
+          <h1 className="text-6xl font-black text-gray-900 mb-4 leading-none tracking-tighter">
+            {product.title}
+          </h1>
+
+          <p className="text-3xl font-medium text-gray-400 mb-10 italic tracking-tight">
+            {product.price ? `₹${product.price.toLocaleString()}` : "Price on Request"}
+          </p>
+
+          <div className="space-y-10">
+            <div className="border-l-4 border-black pl-6">
+              <h3 className="text-xs font-black uppercase tracking-widest text-gray-300 mb-3 font-sans">The Story</h3>
+              <p className="text-gray-600 leading-relaxed text-xl">
+                {product.description || "Every piece is crafted to tell a story of luxury and timeless elegance."}
+              </p>
             </div>
-           
-            <Link href={"/contact"} className="w-fit border border-gray-900 text-center text-gray-900 hover:bg-gray-900 hover:text-white font-bold py-3 px-10 rounded-full transition-all">
-              Contact Us for Inquiry
-            </Link>
+
+            <div className="pt-4 flex flex-col sm:flex-row gap-4">
+              <button className="flex-[3] bg-black text-white py-6 rounded-full font-black hover:bg-gray-800 shadow-2xl active:scale-95 transition-all uppercase tracking-[0.2em] text-xs">
+                Inquire via WhatsApp
+              </button>
+              <button className="flex-1 px-8 py-6 border-2 border-gray-100 rounded-full hover:bg-gray-50 transition-all flex items-center justify-center group shadow-sm active:scale-90">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="group-hover:text-red-500 transition-colors">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>

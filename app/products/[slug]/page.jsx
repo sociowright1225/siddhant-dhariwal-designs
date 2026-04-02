@@ -1,148 +1,121 @@
 "use client";
 
-import api from "@/lib/api";
-import { useEffect, useState, use } from "react";
-import Image from "next/image";
-import Link from "next/link"; 
-import Breadcrumbs from "@/components/breadcrumbs/Breadcrumbs";
-import { ArrowUpRight, ImageIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
-export default function CategoryPage({ params }) {
-  const resolvedParams = use(params);
-  const rawSlug = resolvedParams.slug; 
+export default function CategoryProductsPage() {
+  const params = useParams();
+  const categoryName = params.slug ? decodeURIComponent(params.slug) : "";
   
-  // URL Decoding (%26 -> &)
-  const decodedSlug = decodeURIComponent(rawSlug).toLowerCase();
-  const categoryTitle = decodedSlug.replace(/-/g, " ");
-
-  const [displayItems, setDisplayItems] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFilteredProducts = async () => {
+    const fetchProducts = async () => {
       try {
-        setLoading(true);
-        const { data } = await api.get("/products");
-        
-        // Filter products by category
-        const filteredProducts = data.filter((p) => {
-          if (!p.category) return false;
-          const dbSlug = p.category.toLowerCase().trim().replace(/\s+/g, '-');
-          return dbSlug === decodedSlug;
-        });
-
-        // --- LOGIC: Har Gallery Image ko ek alag "Card Item" banana ---
-        let finalGridItems = [];
-
-        filteredProducts.forEach((product) => {
-          const productSlug = product.slug?.replace(/\s+/g, '-').toLowerCase();
-
-          // 1. Main Image Card
-          finalGridItems.push({
-            id: `${product._id}-main`,
-            title: product.title,
-            price: product.price,
-            image: product.mainImage?.url,
-            link: `/products/${rawSlug}/${productSlug}`,
-            isMain: true
-          });
-
-          // 2. Gallery Image Cards
-          if (product.gallery && product.gallery.length > 0) {
-            product.gallery.forEach((galImg, index) => {
-              finalGridItems.push({
-                id: galImg._id || `${product._id}-gal-${index}`,
-                title: `${product.title} (View ${index + 1})`,
-                price: product.price,
-                image: galImg.url,
-                link: `/products/${rawSlug}/${productSlug}`,
-                isMain: false
-              });
-            });
-          }
-        });
-
-        setDisplayItems(finalGridItems);
+        const res = await fetch(`http://localhost:5000/api/products/category/${categoryName}`);
+        const data = await res.json();
+        setProducts(data);
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchFilteredProducts();
-  }, [decodedSlug, rawSlug]);
 
-  if (loading) return <div className="text-center py-20 font-bold text-indigo-600">Loading {categoryTitle} Gallery...</div>;
+    if (categoryName) fetchProducts();
+  }, [categoryName]);
 
-  return (
-    <div className="bg-[#F8FAFC] min-h-screen">
-      <Breadcrumbs
-        title={categoryTitle}
-        breadcrumbs={["Home", "Portfolio", categoryTitle]}
-      />
-
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <header className="mb-12 border-l-4 border-indigo-600 pl-6">
-           <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase italic">
-             {categoryTitle} Collection <span className="text-indigo-600">/</span> {displayItems.length} Shots
-           </h2>
-        </header>
-
-        {displayItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {displayItems.map((item) => (
-              <Link href={item.link} key={item.id} className="group">
-                <div className="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-slate-100 flex flex-col h-full">
-                  
-                  {/* Image Holder */}
-                  <div className="relative aspect-[4/5] w-full overflow-hidden">
-                    <Image
-                      src={item.image || "/placeholder.jpg"}
-                      alt={item.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                    />
-                    
-                    {/* Overlay on Hover */}
-                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                       <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-500">
-                          <ArrowUpRight className="text-slate-900" size={24} />
-                       </div>
-                    </div>
-
-                    {/* Badge */}
-                    <div className="absolute top-4 left-4">
-                       <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter shadow-sm ${item.isMain ? 'bg-indigo-600 text-white' : 'bg-white/90 text-slate-600'}`}>
-                          {item.isMain ? 'Cover' : 'Angle Shot'}
-                       </span>
-                    </div>
-                  </div>
-
-                  {/* Details */}
-                  <div className="p-6">
-                    <h3 className="font-bold text-slate-800 text-sm line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight">
-                      {item.title}
-                    </h3>
-                    <div className="flex items-center justify-between mt-3">
-                       <span className="text-xs font-black text-indigo-600">
-                         {item.price ? `₹${item.price}` : "INQUIRY"}
-                       </span>
-                       <div className="flex items-center gap-1 text-slate-300 group-hover:text-indigo-400 transition-colors">
-                          <ImageIcon size={14} />
-                          <span className="text-[10px] font-bold">VIEW PROJECT</span>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+  // Modern Skeleton Loader
+  if (loading) return (
+    <div className="max-w-7xl mx-auto p-6 animate-pulse">
+      <div className="h-8 w-48 bg-gray-200 rounded mb-10" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <div key={i} className="space-y-4">
+            <div className="aspect-[3/4] bg-gray-100 rounded-2xl" />
+            <div className="h-4 w-3/4 bg-gray-100 rounded" />
+            <div className="h-4 w-1/2 bg-gray-100 rounded" />
           </div>
-        ) : (
-          <div className="text-center py-40 bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-             <p className="text-slate-400 font-bold">No images available for this category.</p>
-          </div>
-        )}
+        ))}
       </div>
     </div>
+  );
+
+  return (
+    <main className="max-w-7xl mx-auto p-6 md:py-12">
+      {/* Header Section */}
+      <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-gray-100 pb-8 gap-4">
+        <div>
+          <nav className="flex gap-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2">
+            <Link href="/" className="hover:text-black transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-gray-900 font-bold">{categoryName}</span>
+          </nav>
+          <h1 className="text-4xl md:text-5xl font-light capitalize text-slate-900 tracking-tight">
+            {categoryName}
+          </h1>
+          <p className="text-slate-400 mt-3 font-medium text-sm">
+            Showing {products.length} curated designs
+          </p>
+        </div>
+        
+        <Link 
+          href="/" 
+          className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-black transition-all"
+        >
+          <span className="group-hover:-translate-x-1 transition-transform">←</span> Back to Collections
+        </Link>
+      </header>
+
+      {/* Product Grid */}
+      {products.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+          {products.map((product) => (
+            <Link 
+              key={product._id}
+              href={`/products/${params.slug}/${product.slug}`}
+              className="group"
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-gray-50 aspect-[4/5]">
+                {/* Product Image */}
+                <img
+                  src={product.mainImage?.url || product.gallery?.[0]?.url || "/placeholder.jpg"}
+                  alt={product.title}
+                  className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+                
+                {/* Hover Button Overlay */}
+                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                   <div className="w-full bg-white/90 backdrop-blur-sm py-3 rounded-xl text-center text-xs font-bold uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                     View Details
+                   </div>
+                </div>
+              </div>
+
+              {/* Content Section */}
+              <div className="mt-4 space-y-1">
+                <div className="flex justify-between items-start">
+                  <h2 className="text-sm font-semibold text-slate-800 tracking-tight leading-tight uppercase truncate pr-4">
+                    {product.title}
+                  </h2>
+                  <span className="text-sm font-black text-slate-900">
+                    {product.price ? `₹${product.price.toLocaleString()}` : "P.O.R"}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 line-clamp-1 italic">
+                  {product.description || "No description available"}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="py-20 text-center border-2 border-dashed border-gray-100 rounded-3xl">
+          <p className="text-gray-400 text-sm tracking-widest uppercase font-medium">No items found in this category.</p>
+        </div>
+      )}
+    </main>
   );
 }
