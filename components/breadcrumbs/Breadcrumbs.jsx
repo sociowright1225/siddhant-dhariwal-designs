@@ -2,14 +2,14 @@ import React from "react";
 import Image from "next/image";
 import about3 from '@/public/about/about3.jpg'; 
 
-const Breadcrumbs = ({ title, breadcrumbs }) => {
+const Breadcrumbs = ({ title, breadcrumbs, image }) => {
   return (
     <section className="relative w-full py-46 flex flex-col items-center justify-center overflow-hidden">
       
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src={about3}
+          src={image}
           alt={title}
           fill
           priority

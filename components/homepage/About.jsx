@@ -114,7 +114,7 @@ export default function CategorySection() {
         {/* Button */}
         <div className="flex justify-center px-6">
           <a
-            href="/about"
+            href="/products"
             className="w-full sm:w-auto text-center bg-black text-white hover:bg-white hover:text-black border border-black transition-all duration-300 px-10 py-4 rounded-full text-sm font-medium"
           >
            Discover All Categories

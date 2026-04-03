@@ -85,7 +85,7 @@ export default function Products() {
               <div className="group bg-gray-50 rounded-3xl p-4 md:p-6 text-center border border-gray-100 hover:shadow-xl transition duration-300">
                 <div className="relative h-64 md:h-80 mb-6 overflow-hidden rounded-2xl">
                   <Image
-                    src={item.image?.url || "/placeholder.jpg"} 
+                  src={item.mainImage?.url || item.gallery?.[0]?.url || "/placeholder.jpg"}
                     alt={item.title || "Product Image"}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"

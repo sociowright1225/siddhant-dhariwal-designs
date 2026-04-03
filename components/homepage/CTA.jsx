@@ -9,7 +9,7 @@ export default function CTA() {
       
       {/* BACKGROUND IMAGE */}
       <Image
-        src={contact}
+        src="https://res.cloudinary.com/dwdmczhsn/image/upload/q_auto/f_auto/v1775185008/CTA.jpg_mpuk4u.jpg"
         alt="Luxury Sofa"
         fill
         priority
@@ -42,8 +42,7 @@ Designs, we create lighting that speaks before a word is spoken.
           {/* BUTTONS - Mobile par stack, Small screen se row mein */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a href="/contact" className="w-full sm:w-auto px-10 py-4 rounded-full bg-white text-black text-sm font-semibold hover:bg-black hover:text-white border border-white transition-all duration-300">
-              Shop Now
-            </a>
+Contact US            </a>
 
             <a href="/about" className="w-full sm:w-auto px-10 py-4 rounded-full border border-white/50 text-white text-sm font-semibold backdrop-blur-sm hover:bg-white hover:text-black transition-all duration-300">
               Learn More
