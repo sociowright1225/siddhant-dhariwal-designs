@@ -9,7 +9,7 @@ export default function page() {
        <Breadcrumbs
       title="Products"
       breadcrumbs={["Home", "Products"]}
-      image="https://res.cloudinary.com/dwdmczhsn/image/upload/q_auto/f_auto/v1775184992/bokeh_pendant_light.jpg_guhksb.jpg"
+      image="https://res.cloudinary.com/dwdmczhsn/image/upload/q_auto/f_auto/v1775186056/projects_banner.jpg_rpzw3m.jpg"
     />
       <Products/>
       <CTA/>
