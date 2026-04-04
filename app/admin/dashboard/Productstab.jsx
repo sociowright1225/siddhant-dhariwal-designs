@@ -43,12 +43,13 @@ const initialCatForm = {
 };
 
 const CATEGORY_OPTIONS = [
-  "Wall Decor",
-  "Pendent Light",
+  "Wall Light",
+  "Pendant Light",
   "Table Lamp",
   "Chandelier",
   "Floor Light",
   "Home Decor",
+   "Totems",
 ];
 
 export default function ProductsTab() {
