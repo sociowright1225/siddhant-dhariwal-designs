@@ -8,7 +8,7 @@ const WhatWeDo = () => {
         <div className="relative">
           <div className="overflow-hidden rounded-lg shadow-md aspect-square">
             <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000"
+              src="https://res.cloudinary.com/dwdmczhsn/image/upload/q_auto/f_auto/v1775493945/what_we_do_section_image.jpg_o8mqnk.jpg"
               alt="Craftsmanship and Process"
               className="w-full h-full object-cover"
             />

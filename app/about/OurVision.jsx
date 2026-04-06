@@ -28,7 +28,7 @@ globally.
           <div className="order-1 lg:order-2 relative">
             <div className="overflow-hidden rounded-2xl shadow-sm aspect-[4/3]">
               <img
-                src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200"
+                src="https://res.cloudinary.com/dwdmczhsn/image/upload/q_auto/f_auto/v1775493846/our_vision.jpg_nelm9m.jpg"
                 alt="Showroom display"
                 className="w-full h-full object-cover"
               />

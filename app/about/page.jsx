@@ -5,6 +5,7 @@ import OurVision from './OurVision'
 import WhatWeDo from './WhatWeDo'
 import WhatWeCreate from './WhatWeCreate'
 import CTA from '@/components/homepage/CTA'
+import about from "@/public/about/about3.jpg"
 
 export default function page() {
   return (
@@ -12,6 +13,7 @@ export default function page() {
        <Breadcrumbs
       title="About"
       breadcrumbs={["Home", "About"]}
+      image={about}
     />
       <MeetOurFounder/>
       <OurVision/>
