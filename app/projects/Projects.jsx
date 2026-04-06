@@ -36,7 +36,7 @@ export default function Projects() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-24">
-      <div className="grid md:grid-cols-3 gap-12">
+      <div className="grid md:grid-cols-3 gap-6">
         {projects.map((project) => {
           const projectSlug = createSlug(project.title);
 
